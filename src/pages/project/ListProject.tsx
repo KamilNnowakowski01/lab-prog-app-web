@@ -2,13 +2,23 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Project } from "../../models/Project";
 import { ProjectService } from "../../services/ProjectService";
+import { useProjectStore } from "../../store/useProjectStore";
 
 export default function ListProject() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const { activeProjectId, setActiveProject, clearActiveProject } = useProjectStore();
 
   useEffect(() => {
     setProjects(ProjectService.getProjects());
   }, []);
+
+  const handleSelectProject = (projectId: string) => {
+    if (activeProjectId === projectId) {
+      clearActiveProject();
+    } else {
+      setActiveProject(projectId);
+    }
+  };
 
   return (
     <div>
@@ -17,7 +27,11 @@ export default function ListProject() {
       <div className="row">
         {projects.map((project) => (
           <div key={project.id} className="col-md-6 mb-3">
-            <div className="card shadow-sm">
+            <div 
+              className={`card shadow-sm ${activeProjectId === project.id ? "border-primary" : ""}`} 
+              onClick={() => handleSelectProject(project.id)}
+              style={{ cursor: "pointer" }}
+            >
               <div className="card-body">
                 <h5 className="card-title">{project.name}</h5>
                 <p className="card-text">{project.description}</p>
