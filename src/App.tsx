@@ -27,7 +27,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   useEffect(() => {
     seedUser();
-    if (!localStorage.getItem("projects")) seedProjects();
+    seedProjects();
     seedStories();
   }, []);
 
