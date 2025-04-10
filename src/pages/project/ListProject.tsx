@@ -9,7 +9,12 @@ export default function ListProject() {
   const { activeProjectId, setActiveProject, clearActiveProject } = useProjectStore();
 
   useEffect(() => {
-    setProjects(ProjectService.getProjects());
+    const fetchProjects = async () => {
+      const allProjects = await ProjectService.getProjects();
+      setProjects(allProjects);
+    };
+
+    fetchProjects();
   }, []);
 
   const handleSelectProject = (projectId: string) => {

@@ -7,27 +7,50 @@ export default function EditProject() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const project = ProjectService.getProjects().find((p) => p.id === id);
-    if (project) {
-      setName(project.name);
-      setDescription(project.description);
-    }
+    const fetchProject = async () => {
+      if (!id) return;
+      const project = await ProjectService.getProjectById(id);
+      if (project) {
+        setName(project.name);
+        setDescription(project.description);
+      }
+      setLoading(false);
+    };
+
+    fetchProject();
   }, [id]);
 
-  const handleUpdate = () => {
-    if (!name.trim() || !description.trim()) return;
-    ProjectService.updateProject({ id: id!, name, description });
+  const handleUpdate = async () => {
+    if (!name.trim() || !description.trim() || !id) return;
+    await ProjectService.updateProject({ id, name, description });
     navigate("/project");
   };
+
+  if (loading) {
+    return <div>Ładowanie danych projektu...</div>;
+  }
 
   return (
     <div>
       <h2>Edytuj Projekt</h2>
-      <input className="form-control mb-2" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      <input className="form-control mb-2" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-      <button className="btn btn-primary" onClick={handleUpdate}>💾 Zapisz zmiany</button>
+      <input
+        className="form-control mb-2"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        className="form-control mb-2"
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <button className="btn btn-primary" onClick={handleUpdate}>
+        💾 Zapisz zmiany
+      </button>
     </div>
   );
 }

@@ -10,24 +10,45 @@ export default function AddStory() {
   const { activeProjectId } = useProjectStore();
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !description || !activeProjectId) return;
 
-    StoryService.addStory({
-      name,
-      description,
-      projectId: activeProjectId,
-      status: Status.ToDo
-    });
+    try {
+      await StoryService.addStory({
+        name,
+        description,
+        projectId: activeProjectId,
+        status: Status.ToDo
+      });
 
-    navigate(`/project/${activeProjectId}/stories`);
+      // Reset form after submitting
+      setName("");
+      setDescription("");
+
+      // Navigate to the project stories page
+      navigate(`/project/${activeProjectId}/stories`);
+    } catch (error) {
+      console.error("Error adding story:", error);
+      alert("Coś poszło nie tak. Spróbuj ponownie.");
+    }
   };
 
   return (
     <div>
       <h2>Dodaj Nową Historyjkę</h2>
-      <input type="text" placeholder="Nazwa" value={name} onChange={e => setName(e.target.value)} className="form-control mb-2" />
-      <textarea placeholder="Opis" value={description} onChange={e => setDescription(e.target.value)} className="form-control mb-2"></textarea>
+      <input
+        type="text"
+        placeholder="Nazwa"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="form-control mb-2"
+      />
+      <textarea
+        placeholder="Opis"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="form-control mb-2"
+      ></textarea>
       <button className="btn btn-success" onClick={handleSubmit}>💾 Zapisz</button>
     </div>
   );

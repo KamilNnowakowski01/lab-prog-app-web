@@ -1,15 +1,26 @@
+// seedUsers.ts
 import { User } from "../models/User";
-import { v4 as uuidv4 } from "uuid";
+import { UserService } from "../services/UserService";
 
-// Funkcja inicjalizująca użytkownika
-export function seedUser() {
-  const storedUser = localStorage.getItem("loggedInUser");
+export async function seedUsers() {
+  const existingUsers = await UserService.getAllUsers();
+  if (existingUsers.length > 0) return;
 
-  if (!storedUser) {
-    const newUser: User = {
-      id: uuidv4(),  // Generowanie unikalnego ID
-      name: "Jan Kowalski"
-    };
-    localStorage.setItem("loggedInUser", JSON.stringify(newUser));
-  }
+  const adminUser = await UserService.createUser({
+    name: "Jan Kowalski (Admin)",
+    role: "admin"
+  });
+
+  await UserService.createUser({
+    name: "Anna Nowak (Developer)",
+    role: "developer"
+  });
+
+  await UserService.createUser({
+    name: "Piotr Wiśniewski (DevOps)",
+    role: "devops"
+  });
+
+  await UserService.loginUser(adminUser.id);
+  console.log("Zalogowano admina:", adminUser.name);
 }

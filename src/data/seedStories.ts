@@ -2,7 +2,6 @@ import { Story, Status } from "../models/Story";
 import { StoryService } from "../services/StoryService";
 import { ProjectService } from "../services/ProjectService";
 import { UserService } from "../services/UserService";
-import { v4 as uuidv4 } from "uuid";
 
 // Przykładowe zadania dla każdego projektu
 const projectTasks: Record<string, string[]> = {
@@ -51,10 +50,9 @@ const projectTasks: Record<string, string[]> = {
 };
 
 // Funkcja generująca przykładowe historyjki dla jednego projektu
-function generateStoriesForProject(projectId: string, ownerId: string): Story[] {
+function generateStoriesForProject(projectId: string, ownerId: string): Omit<Story, "id">[] {
   const tasks = projectTasks[projectId] || [];
   return tasks.map((name, index) => ({
-    id: uuidv4(),
     name,
     description: `Opis do zadania: ${name}...`,
     projectId,
@@ -65,11 +63,11 @@ function generateStoriesForProject(projectId: string, ownerId: string): Story[] 
 }
 
 // Funkcja inicjalizująca przykładowe historyjki w localStorage
-export function seedStories() {
-  const existingStories = StoryService.getStories();
-  if (existingStories.length > 0) return;  // Jeśli są już jakieś historyjki, to nie dodajemy kolejnych
+export async function seedStories() {
+  const existingStories = await StoryService.getStories();
+  if (existingStories.length > 0) return;
 
-  const projects = ProjectService.getProjects();
+  const projects = await ProjectService.getProjects();
   const user = UserService.getUser();
 
   if (!user) {
@@ -77,12 +75,10 @@ export function seedStories() {
     return;
   }
 
-  const allStories: Story[] = [];
-
-  projects.forEach(project => {
+  for (const project of projects) {
     const storiesForProject = generateStoriesForProject(project.id, user.id);
-    allStories.push(...storiesForProject);
-  });
-
-  StoryService.saveStories(allStories);  // Zapisanie wszystkich wygenerowanych historyjek do localStorage
+    for (const story of storiesForProject) {
+      await StoryService.addStory(story);
+    }
+  }
 }

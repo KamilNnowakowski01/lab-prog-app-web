@@ -1,44 +1,43 @@
+import { LocalStorage } from "./LocalStorage";
 import { Story } from "../models/Story";
-import { UserService } from "./UserService";  // ✅ Importowanie UserService
-import { v4 as uuidv4 } from "uuid";
+import { UserService } from "./UserService";
 
 export class StoryService {
-  private static STORAGE_KEY = "stories";
+  private static storage = new LocalStorage<Story>("stories");
 
-  static getStories(): Story[] {
-    const data = localStorage.getItem(this.STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+  static async getStories(): Promise<Story[]> {
+    return this.storage.getAll();
   }
 
-  static saveStories(stories: Story[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(stories));
+  static async getStoryById(id: string): Promise<Story | null> {
+    return this.storage.getById(id);
   }
 
-  static addStory(story: Omit<Story, "id" | "ownerId" | "createdAt">): void {
-    const stories = this.getStories();
+  static async addStory(story: Omit<Story, "id" | "ownerId" | "createdAt">): Promise<Story> {
     const loggedInUser = UserService.getUser();
-
     if (!loggedInUser) {
       throw new Error("Nie znaleziono zalogowanego użytkownika.");
     }
 
-    const newStory: Story = {
+    const newStoryData = {
       ...story,
-      id: uuidv4(),
       ownerId: loggedInUser.id,
       createdAt: new Date().toISOString()
     };
-    stories.push(newStory);
-    this.saveStories(stories);
+
+    return this.storage.create(newStoryData);
   }
 
-  static updateStory(updatedStory: Story): void {
-    const stories = this.getStories().map((s) => s.id === updatedStory.id ? updatedStory : s);
-    this.saveStories(stories);
+  static async updateStory(updatedStory: Story): Promise<Story> {
+    return this.storage.update(updatedStory);
   }
 
-  static deleteStory(id: string): void {
-    const stories = this.getStories().filter((s) => s.id !== id);
-    this.saveStories(stories);
+  static async deleteStory(id: string): Promise<void> {
+    return this.storage.delete(id);
+  }
+
+  // Specjalna metoda tylko do seedowania danych
+  static async saveStories(stories: Story[]): Promise<void> {
+    localStorage.setItem("stories", JSON.stringify(stories));
   }
 }

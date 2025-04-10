@@ -1,32 +1,31 @@
+import { LocalStorage } from "../services/LocalStorage";
 import { Project } from "../models/Project";
 
 export class ProjectService {
-    private static STORAGE_KEY = "projects";
-  
-    static getProjects(): Project[] {
-      const data = localStorage.getItem(this.STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
-    }
-  
-    static saveProjects(projects: Project[]): void {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(projects));
-    }
-  
-    static addProject(project: Project): void {
-      const projects = this.getProjects();
-      projects.push(project);
-      this.saveProjects(projects);
-    }
-  
-    static updateProject(updatedProject: Project): void {
-      let projects = this.getProjects();
-      projects = projects.map((p) => (p.id === updatedProject.id ? updatedProject : p));
-      this.saveProjects(projects);
-    }
-  
-    static deleteProject(id: string): void {
-      let projects = this.getProjects().filter((p) => p.id !== id);
-      this.saveProjects(projects);
-    }
+  private static storage = new LocalStorage<Project>("projects");
+
+  static async getProjects(): Promise<Project[]> {
+    return this.storage.getAll();
   }
-  
+
+  static async getProjectById(id: string): Promise<Project | null> {
+    return this.storage.getById(id);
+  }
+
+  static async addProject(project: Omit<Project, "id">): Promise<Project> {
+    return this.storage.create(project);
+  }
+
+  static async updateProject(updatedProject: Project): Promise<Project> {
+    return this.storage.update(updatedProject);
+  }
+
+  static async deleteProject(id: string): Promise<void> {
+    return this.storage.delete(id);
+  }
+
+  // Specjalna metoda tylko do seedowania danych
+  static async saveProjects(projects: Project[]): Promise<void> {
+    localStorage.setItem("projects", JSON.stringify(projects));
+  }
+}

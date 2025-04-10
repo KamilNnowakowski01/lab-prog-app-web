@@ -11,13 +11,14 @@ export default function ListStories() {
   const [projectName, setProjectName] = useState<string | null>(null);
   const { activeProjectId } = useProjectStore();
 
-  const refreshStories = () => {
+  const refreshStories = async () => {
     if (activeProjectId) {
-      const allStories = StoryService.getStories();
+      const allStories = await StoryService.getStories();
       const filteredStories = allStories.filter(story => story.projectId === activeProjectId);
       setStories(filteredStories);
 
-      const activeProject = ProjectService.getProjects().find(p => p.id === activeProjectId);
+      const allProjects = await ProjectService.getProjects();
+      const activeProject = allProjects.find(p => p.id === activeProjectId);
       if (activeProject) {
         setProjectName(activeProject.name);
       }
@@ -29,9 +30,11 @@ export default function ListStories() {
   }, [activeProjectId]);
 
   const renderStories = (status: Status) => (
-    stories.filter(story => story.status === status).map(story => (
-      <StoryItem key={story.id} story={story} refreshStories={refreshStories} />
-    ))
+    stories
+      .filter(story => story.status === status)
+      .map(story => (
+        <StoryItem key={story.id} story={story} refreshStories={refreshStories} />
+      ))
   );
 
   if (!activeProjectId) return <div className="text-danger">Wybierz projekt, aby zobaczyć historyjki!</div>;
@@ -39,12 +42,12 @@ export default function ListStories() {
   return (
     <div>
       <h1 className="mb-4 text-primary">📁 {projectName}</h1>
-      
+
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Kanban - Historyjki</h2>
         <Link to={`/project/${activeProjectId}/stories/add`} className="btn btn-success">➕ Dodaj historyjkę</Link>
       </div>
-      
+
       <div className="row">
         <div className="col">
           <h3>📝 To Do</h3>

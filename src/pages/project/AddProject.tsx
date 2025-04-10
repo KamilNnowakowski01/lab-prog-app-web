@@ -10,7 +10,7 @@ export default function AddProject() {
 
   const handleSubmit = () => {
     if (!name.trim() || !description.trim()) return;
-    ProjectService.addProject({ id: uuidv4(), name, description });
+    ProjectService.addProject({ name, description });
     navigate("/project");
   };
 

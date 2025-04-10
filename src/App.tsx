@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 
 import { seedProjects } from "./data/seedProjects";
-import { seedUser } from "./data/seedUsers";
+import { seedUsers } from "./data/seedUsers";
 import { seedStories } from "./data/seedStories";
 
 //pages
@@ -26,7 +26,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   useEffect(() => {
-    seedUser();
+    seedUsers();
     seedProjects();
     seedStories();
   }, []);

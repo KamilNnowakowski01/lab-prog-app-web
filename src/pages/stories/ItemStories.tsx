@@ -7,17 +7,18 @@ export default function ItemStories() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [story, setStory] = useState<Story | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      const foundStory = StoryService.getStories().find(story => story.id === id);
-      if (foundStory) {
-        setStory(foundStory);
-      }
-    }
-  }, [id]);
+    const fetchStory = async () => {
+      if (!id) return;
+      const foundStory = await StoryService.getStoryById(id);
+      setStory(foundStory);
+      setLoading(false);
+    };
 
-  if (!story) return <div className="text-danger">Nie znaleziono historyjki!</div>;
+    fetchStory();
+  }, [id]);
 
   const getStatusBadge = (status: Status) => {
     switch (status) {
@@ -27,6 +28,9 @@ export default function ItemStories() {
       default: return "badge bg-secondary";
     }
   };
+
+  if (loading) return <div>Ładowanie danych historyjki...</div>;
+  if (!story) return <div className="text-danger">Nie znaleziono historyjki!</div>;
 
   return (
     <div>

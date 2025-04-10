@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { StoryService } from "../../services/StoryService";
-import { Story } from "../../models/Story";
-import { Status } from "../../models/Story";
+import { Story, Status } from "../../models/Story";
 
 export default function EditStories() {
   const { id } = useParams<{ id: string }>();
@@ -11,28 +10,33 @@ export default function EditStories() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState<Status>(Status.ToDo);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      const foundStory = StoryService.getStories().find(story => story.id === id);
+    const fetchStory = async () => {
+      if (!id) return;
+      const foundStory = await StoryService.getStoryById(id);
       if (foundStory) {
         setStory(foundStory);
         setName(foundStory.name);
         setDescription(foundStory.description);
         setStatus(foundStory.status);
       }
-    }
+      setLoading(false);
+    };
+
+    fetchStory();
   }, [id]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (story && name.trim() && description.trim()) {
-      const updatedStory = { ...story, name, description, status };
-      StoryService.updateStory(updatedStory);
+      const updatedStory: Story = { ...story, name, description, status };
+      await StoryService.updateStory(updatedStory);
       navigate(`/project/${story.projectId}/stories`);
-      
     }
   };
 
+  if (loading) return <p>Ładowanie danych historyjki...</p>;
   if (!story) return <div className="text-danger">Nie znaleziono historyjki!</div>;
 
   return (
