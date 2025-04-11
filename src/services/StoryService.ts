@@ -14,7 +14,7 @@ export class StoryService {
   }
 
   static async addStory(story: Omit<Story, "id" | "ownerId" | "createdAt">): Promise<Story> {
-    const loggedInUser = UserService.getUser();
+    const loggedInUser = UserService.getCurrentUser();
     if (!loggedInUser) {
       throw new Error("Nie znaleziono zalogowanego użytkownika.");
     }
