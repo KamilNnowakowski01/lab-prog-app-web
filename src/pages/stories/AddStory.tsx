@@ -1,55 +1,43 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { StoryService } from "../../services/StoryService";
-import { useProjectStore } from "../../store/useProjectStore";
-import { Status } from "../../models/Story";
+import { Container } from "react-bootstrap";
+import TitleHeader from "../../components/TitleHeader";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import StoryForm from "../../components/stories/StoryForm";
+import { useProjectInfo } from "../../helpers/useProjectInfo";
+import { useAddStory } from "../../helpers/stories/useAddStory";
 
 export default function AddStory() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const { activeProjectId } = useProjectStore();
-  const navigate = useNavigate();
+  const {
+    name,
+    description,
+    setName,
+    setDescription,
+    handleSubmit,
+    handleCancel,
+    activeProjectId,
+  } = useAddStory();
 
-  const handleSubmit = async () => {
-    if (!name || !description || !activeProjectId) return;
-
-    try {
-      await StoryService.addStory({
-        name,
-        description,
-        projectId: activeProjectId,
-        status: Status.ToDo
-      });
-
-      // Reset form after submitting
-      setName("");
-      setDescription("");
-
-      // Navigate to the project stories page
-      navigate(`/project/${activeProjectId}/stories`);
-    } catch (error) {
-      console.error("Error adding story:", error);
-      alert("Coś poszło nie tak. Spróbuj ponownie.");
-    }
-  };
+  const { project } = useProjectInfo();
 
   return (
-    <div>
-      <h2>Dodaj Nową Historyjkę</h2>
-      <input
-        type="text"
-        placeholder="Nazwa"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="form-control mb-2"
+    <Container>
+      <BeltBreadcrumb
+        isProjectRoute
+        projectId={project?.id}
+        projectName={project?.name}
+        isStoryRoute
+        isCreate
       />
-      <textarea
-        placeholder="Opis"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="form-control mb-2"
-      ></textarea>
-      <button className="btn btn-success" onClick={handleSubmit}>💾 Zapisz</button>
-    </div>
+      <TitleHeader title="New Story" />
+
+      <StoryForm
+        name={name}
+        description={description}
+        onNameChange={setName}
+        onDescriptionChange={setDescription}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        isEdit={false}
+      />
+    </Container>
   );
 }

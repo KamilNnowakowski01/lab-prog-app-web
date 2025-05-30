@@ -23,9 +23,4 @@ export class ProjectService {
   static async deleteProject(id: string): Promise<void> {
     return this.storage.delete(id);
   }
-
-  // Specjalna metoda tylko do seedowania danych
-  static async saveProjects(projects: Project[]): Promise<void> {
-    localStorage.setItem("projects", JSON.stringify(projects));
-  }
 }

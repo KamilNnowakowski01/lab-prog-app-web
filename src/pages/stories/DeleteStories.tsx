@@ -1,45 +1,49 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { StoryService } from "../../services/StoryService";
-import { Story } from "../../models/Story";
+import { Link } from "react-router-dom";
+import { Col } from "react-bootstrap";
+import TitleHeader from "../../components/TitleHeader";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import { useProjectInfo } from "../../helpers/useProjectInfo";
+import { useDeleteStory } from "../../helpers/stories/useDeleteStory";
 
 export default function DeleteStories() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const [story, setStory] = useState<Story | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStory = async () => {
-      if (!id) return;
-      const foundStory = await StoryService.getStoryById(id);
-      setStory(foundStory);
-      setLoading(false);
-    };
-
-    fetchStory();
-  }, [id]);
-
-  const handleDelete = async () => {
-    if (story) {
-      await StoryService.deleteStory(story.id);
-      navigate(`/project/${story.projectId}/stories`);
-    }
-  };
+  const { story, loading, handleDelete } = useDeleteStory();
+  const { project } = useProjectInfo();
 
   if (loading) return <div>Ładowanie danych historyjki...</div>;
 
-  if (!story) return <div className="text-danger">Nie znaleziono historyjki!</div>;
+  if (!story)
+    return <div className="text-danger">Nie znaleziono historyjki!</div>;
 
   return (
     <div>
-      <h2>🗑️ Usuń Historyjkę</h2>
-      <div className="alert alert-warning">
-        Czy na pewno chcesz usunąć historyjkę?
-        <p><strong>{story.name}</strong></p>
+      <BeltBreadcrumb
+        isProjectRoute
+        projectId={project?.id}
+        projectName={project?.name}
+        isStoryRoute
+        storyId={story.id}
+        storyName={story.name}
+        isDelete
+      />
+      <TitleHeader title="Delete Story" />
+      <div className="d-flex justify-content-center">
+        <Col xs={12} md={8} lg={6}>
+          <div className="alert alert-warning">
+            Are you sure you want to delete the story
+            <p>
+              <strong>{story.name}</strong>?
+            </p>
+          </div>
+          <div className="d-flex justify-content-end gap-2">
+            <Link to={`/stories/${story.projectId}`} className="btn btn-secondary">
+              Cancel
+            </Link>
+            <button className="btn btn-danger" onClick={handleDelete}>
+              Delete
+            </button>
+          </div>
+        </Col>
       </div>
-      <button className="btn btn-danger me-2" onClick={handleDelete}>🗑️ Usuń</button>
-      <button className="btn btn-secondary" onClick={() => navigate(`/project/${story.projectId}/stories`)}>Anuluj</button>
     </div>
   );
 }

@@ -1,9 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 
-import { seedProjects } from "./data/seedProjects";
-import { seedUsers } from "./data/seedUsers";
-import { seedStories } from "./data/seedStories";
+import { seeds } from "./seeds/seeds";
 
 //pages
 import Home from "./pages/Home";
@@ -19,44 +17,107 @@ import ListStories from "./pages/stories/ListStories";
 import ItemStories from "./pages/stories/ItemStories";
 import EditStories from "./pages/stories/EditStories";
 import DeleteStories from "./pages/stories/DeleteStories";
+//pages tasks
+import ListTasks from "./pages/tasks/ListTasks";
+import ItemTasks from "./pages/tasks/ItemTasks";
+import AddTasks from "./pages/tasks/AddTasks";
+import EditTasks from "./pages/tasks/EditTasks";
+import DeleteTasks from "./pages/tasks/DeleteTasks";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
+import Layout from "./components/Layout";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
+import { ThemeWrapper } from "./components/ThemeWrapper";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   useEffect(() => {
-    seedUsers();
-    seedProjects();
-    seedStories();
+    seeds();
   }, []);
 
   return (
-    <Router>
-      <div className="container">
-        <div className="text-center mt-4">
-          <h1 className="display-5 fw-bold text-primary">ManagMe - Projekty</h1>
-          <p className="lead">Zarządzaj swoimi projektami w prosty sposób</p>
-        </div>
+    <ThemeWrapper>
+      <Layout>
         <Routes>
           {/* pages*/}
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           {/* pages project */}
-          <Route path="/project/add" element={<AddProject />} />
-          <Route path="/project" element={<ListProject />} />
-          <Route path="/project/:id" element={<ItemProject />} />
-          <Route path="/project/edit/:id" element={<EditProject />} />
-          <Route path="/project/delete/:id" element={<DeleteProject />} />
+          <Route
+            path="/project/add"
+            element={<ProtectedRoute page={<AddProject />} />}
+          />
+          <Route
+            path="/project"
+            element={<ProtectedRoute page={<ListProject />} />}
+          />
+          <Route
+            path="/project/:id"
+            element={<ProtectedRoute page={<ItemProject />} />}
+          />
+          <Route
+            path="/project/edit/:id"
+            element={<ProtectedRoute page={<EditProject />} />}
+          />
+          <Route
+            path="/project/delete/:id"
+            element={<ProtectedRoute page={<DeleteProject />} />}
+          />
           {/* pages stories */}
-          <Route path="/project/:id/stories/add" element={<AddStory />} />
-          <Route path="/project/:id/stories" element={<ListStories />} />
-          <Route path="/stories" element={<ListStories />} />
-          <Route path="/stories/:id" element={<ItemStories />} />
-          <Route path="/stories/edit/:id" element={<EditStories />} />
-          <Route path="/stories/delete/:id" element={<DeleteStories />} />
+          <Route
+            path="/project/:id/stories/add"
+            element={<ProtectedRoute page={<AddStory />} />}
+          />
+          <Route
+            path="/project/:id/stories"
+            element={<ProtectedRoute page={<ListStories />} />}
+          />
+          <Route
+            path="/stories"
+            element={<ProtectedRoute page={<ListStories />} />}
+          />
+          <Route
+            path="/stories/:id"
+            element={<ProtectedRoute page={<ItemStories />} />}
+          />
+          <Route
+            path="/stories/edit/:id"
+            element={<ProtectedRoute page={<EditStories />} />}
+          />
+          <Route
+            path="/stories/delete/:id"
+            element={<ProtectedRoute page={<DeleteStories />} />}
+          />
+          {/* pages tasks */}
+          <Route
+            path="/stories/:id/tasks/"
+            element={<ProtectedRoute page={<ListTasks />} />}
+          />
+          <Route
+            path="/tasks"
+            element={<ProtectedRoute page={<ListTasks />} />}
+          />
+          <Route
+            path="/tasks/:id"
+            element={<ProtectedRoute page={<ItemTasks />} />}
+          />
+          <Route
+            path="/stories/:storyId/tasks/add"
+            element={<ProtectedRoute page={<AddTasks />} />}
+          />
+          <Route
+            path="/tasks/edit/:id"
+            element={<ProtectedRoute page={<EditTasks />} />}
+          />
+          <Route
+            path="/tasks/delete/:id"
+            element={<ProtectedRoute page={<DeleteTasks />} />}
+          />
         </Routes>
-      </div>
-    </Router>
+      </Layout>
+    </ThemeWrapper>
   );
 }
 

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "332311ef-0b78-4ea7-82a6-78b12536d564",
+    "name": "Dodaj możliwość dodawania zadań",
+    "description": "Opis do zadania: Dodaj możliwość dodawania zadań",
+    "projectId": "f8d99809-dd64-4b93-8486-2b2201a71993",
+    "createdAt": "2025-05-28T15:40:26.379233",
+    "status": "To Do",
+    "ownerId": "50a14f08-5211-44c8-8459-a73621002468"
+  },
+  {
+    "id": "ea927829-150a-436d-b802-234f190e8de2",
+    "name": "Dodaj usuwanie zadań",
+    "description": "Opis do zadania: Dodaj usuwanie zadań",
+    "projectId": "f8d99809-dd64-4b93-8486-2b2201a71993",
+    "createdAt": "2025-05-28T15:40:26.379303",
+    "status": "Doing",
+    "ownerId": "50a14f08-5211-44c8-8459-a73621002468"
+  },
+  {
+    "id": "0350c658-588d-4e3a-b325-1fdeadd1ea4b",
+    "name": "Dodaj edycję zadań",
+    "description": "Opis do zadania: Dodaj edycję zadań",
+    "projectId": "f8d99809-dd64-4b93-8486-2b2201a71993",
+    "createdAt": "2025-05-28T15:40:26.379492",
+    "status": "Done",
+    "ownerId": "50a14f08-5211-44c8-8459-a73621002468"
+  },
+  {
+    "id": "5c587158-bc9b-43dd-8d22-d1a00d0f55b9",
+    "name": "Stwórz widok ukończonych zadań",
+    "description": "Opis do zadania: Stwórz widok ukończonych zadań",
+    "projectId": "f8d99809-dd64-4b93-8486-2b2201a71993",
+    "createdAt": "2025-05-28T15:40:26.379574",
+    "status": "To Do",
+    "ownerId": "50a14f08-5211-44c8-8459-a73621002468"
+  },
+  {
+    "id": "f906cd2f-b4b0-4e65-8546-9b354379602c",
+    "name": "Dodaj możliwość ustawiania priorytetów",
+    "description": "Opis do zadania: Dodaj możliwość ustawiania priorytetów",
+    "projectId": "f8d99809-dd64-4b93-8486-2b2201a71993",
+    "createdAt": "2025-05-28T15:40:26.379621",
+    "status": "Doing",
+    "ownerId": "50a14f08-5211-44c8-8459-a73621002468"
+  },
+  {
+    "id": "22d80a98-a3db-4089-b2df-45c41493d16e",
+    "name": "Utwórz formularz rezerwacji",
+    "description": "Opis do zadania: Utwórz formularz rezerwacji",
+    "projectId": "9621d6c1-64a9-48af-bc05-83ae361e5bca",
+    "createdAt": "2025-05-28T15:40:26.379798",
+    "status": "To Do",
+    "ownerId": "60adb20c-c72a-4d6e-b655-3174a258bb40"
+  },
+  {
+    "id": "f4f0f5e0-918e-49dd-8d6f-d5c16c2ba7f4",
+    "name": "Dodaj kalendarz dostępności",
+    "description": "Opis do zadania: Dodaj kalendarz dostępności",
+    "projectId": "9621d6c1-64a9-48af-bc05-83ae361e5bca",
+    "createdAt": "2025-05-28T15:40:26.379869",
+    "status": "Doing",
+    "ownerId": "60adb20c-c72a-4d6e-b655-3174a258bb40"
+  },
+  {
+    "id": "e7e62fa9-dca3-46e5-9565-d9cf2edc1e79",
+    "name": "Stwórz API do zarządzania rezerwacjami",
+    "description": "Opis do zadania: Stwórz API do zarządzania rezerwacjami",
+    "projectId": "9621d6c1-64a9-48af-bc05-83ae361e5bca",
+    "createdAt": "2025-05-28T15:40:26.379911",
+    "status": "Done",
+    "ownerId": "60adb20c-c72a-4d6e-b655-3174a258bb40"
+  },
+  {
+    "id": "10f37cb5-719c-408e-8a87-9958e2f36e12",
+    "name": "Dodaj powiadomienia e-mailowe",
+    "description": "Opis do zadania: Dodaj powiadomienia e-mailowe",
+    "projectId": "9621d6c1-64a9-48af-bc05-83ae361e5bca",
+    "createdAt": "2025-05-28T15:40:26.379932",
+    "status": "To Do",
+    "ownerId": "60adb20c-c72a-4d6e-b655-3174a258bb40"
+  },
+  {
+    "id": "d710e342-e830-426d-bb1b-26580cb96361",
+    "name": "Dodaj możliwość edycji rezerwacji",
+    "description": "Opis do zadania: Dodaj możliwość edycji rezerwacji",
+    "projectId": "9621d6c1-64a9-48af-bc05-83ae361e5bca",
+    "createdAt": "2025-05-28T15:40:26.379949",
+    "status": "Doing",
+    "ownerId": "60adb20c-c72a-4d6e-b655-3174a258bb40"
+  },
+  {
+    "id": "25433c5a-1c39-4b8a-b116-c5d94ace6216",
+    "name": "Dodaj koszyk zakupów",
+    "description": "Opis do zadania: Dodaj koszyk zakupów",
+    "projectId": "8ae820af-ff93-48da-a47c-408ef18f87cc",
+    "createdAt": "2025-05-28T15:40:26.379969",
+    "status": "To Do",
+    "ownerId": "f29ed2e9-8d67-4792-87d5-6a32cc6b59f9"
+  },
+  {
+    "id": "2e911655-c2b8-4abf-8d66-5136e0baa3b5",
+    "name": "Zaimplementuj płatności online",
+    "description": "Opis do zadania: Zaimplementuj płatności online",
+    "projectId": "8ae820af-ff93-48da-a47c-408ef18f87cc",
+    "createdAt": "2025-05-28T15:40:26.379986",
+    "status": "Doing",
+    "ownerId": "f29ed2e9-8d67-4792-87d5-6a32cc6b59f9"
+  },
+  {
+    "id": "5834e1b6-b300-4aa1-a4a6-55de81da3c79",
+    "name": "Dodaj system opinii i recenzji",
+    "description": "Opis do zadania: Dodaj system opinii i recenzji",
+    "projectId": "8ae820af-ff93-48da-a47c-408ef18f87cc",
+    "createdAt": "2025-05-28T15:40:26.380000",
+    "status": "Done",
+    "ownerId": "f29ed2e9-8d67-4792-87d5-6a32cc6b59f9"
+  },
+  {
+    "id": "a7e034d1-3465-4213-8e57-e66a8edb6b21",
+    "name": "Stwórz stronę produktu",
+    "description": "Opis do zadania: Stwórz stronę produktu",
+    "projectId": "8ae820af-ff93-48da-a47c-408ef18f87cc",
+    "createdAt": "2025-05-28T15:40:26.380016",
+    "status": "To Do",
+    "ownerId": "f29ed2e9-8d67-4792-87d5-6a32cc6b59f9"
+  },
+  {
+    "id": "bb7dd60a-cb5e-4a45-a984-b9868427e0a9",
+    "name": "Utwórz panel administracyjny",
+    "description": "Opis do zadania: Utwórz panel administracyjny",
+    "projectId": "8ae820af-ff93-48da-a47c-408ef18f87cc",
+    "createdAt": "2025-05-28T15:40:26.380145",
+    "status": "Doing",
+    "ownerId": "f29ed2e9-8d67-4792-87d5-6a32cc6b59f9"
+  },
+  {
+    "id": "6f921735-d121-4ae6-ab64-fe67fa8fcd77",
+    "name": "Dodaj listę kontaktów",
+    "description": "Opis do zadania: Dodaj listę kontaktów",
+    "projectId": "04c7fa9c-2ac3-49d0-9506-9a88e505bd47",
+    "createdAt": "2025-05-28T15:40:26.380326",
+    "status": "To Do",
+    "ownerId": "641329fc-6e50-416e-88a8-342b847a22a3"
+  },
+  {
+    "id": "9a46431a-842e-4ce4-b509-73b76f338ba4",
+    "name": "Zaimplementuj wiadomości w czasie rzeczywistym",
+    "description": "Opis do zadania: Zaimplementuj wiadomości w czasie rzeczywistym",
+    "projectId": "04c7fa9c-2ac3-49d0-9506-9a88e505bd47",
+    "createdAt": "2025-05-28T15:40:26.380478",
+    "status": "Doing",
+    "ownerId": "641329fc-6e50-416e-88a8-342b847a22a3"
+  },
+  {
+    "id": "71ddb6eb-b2cb-44f5-b235-ebb37cb99e0b",
+    "name": "Dodaj funkcję wysyłania plików",
+    "description": "Opis do zadania: Dodaj funkcję wysyłania plików",
+    "projectId": "04c7fa9c-2ac3-49d0-9506-9a88e505bd47",
+    "createdAt": "2025-05-28T15:40:26.380631",
+    "status": "Done",
+    "ownerId": "641329fc-6e50-416e-88a8-342b847a22a3"
+  },
+  {
+    "id": "f97e313c-8e91-48ad-8c08-e10ecb144424",
+    "name": "Stwórz pokoje czatu",
+    "description": "Opis do zadania: Stwórz pokoje czatu",
+    "projectId": "04c7fa9c-2ac3-49d0-9506-9a88e505bd47",
+    "createdAt": "2025-05-28T15:40:26.380749",
+    "status": "To Do",
+    "ownerId": "641329fc-6e50-416e-88a8-342b847a22a3"
+  },
+  {
+    "id": "c9b8b1e2-dc1b-4615-9623-348d7f1dd9a1",
+    "name": "Dodaj system powiadomień",
+    "description": "Opis do zadania: Dodaj system powiadomień",
+    "projectId": "04c7fa9c-2ac3-49d0-9506-9a88e505bd47",
+    "createdAt": "2025-05-28T15:40:26.380873",
+    "status": "Doing",
+    "ownerId": "641329fc-6e50-416e-88a8-342b847a22a3"
+  },
+  {
+    "id": "09651b42-ba27-4528-badf-3cd2ec8a9d52",
+    "name": "Stwórz stronę główną",
+    "description": "Opis do zadania: Stwórz stronę główną",
+    "projectId": "f1798b7d-7591-445f-88f8-34e6d6102e5a",
+    "createdAt": "2025-05-28T15:40:26.381005",
+    "status": "To Do",
+    "ownerId": "2ef36326-2679-4ccd-89ca-a44112a7ca5a"
+  },
+  {
+    "id": "b62cae97-9b01-479d-abb5-e9a7461e917d",
+    "name": "Dodaj sekcję o mnie",
+    "description": "Opis do zadania: Dodaj sekcję o mnie",
+    "projectId": "f1798b7d-7591-445f-88f8-34e6d6102e5a",
+    "createdAt": "2025-05-28T15:40:26.381203",
+    "status": "Doing",
+    "ownerId": "2ef36326-2679-4ccd-89ca-a44112a7ca5a"
+  },
+  {
+    "id": "9e1affe7-90e1-452a-8f62-8317e3965261",
+    "name": "Dodaj galerię projektów",
+    "description": "Opis do zadania: Dodaj galerię projektów",
+    "projectId": "f1798b7d-7591-445f-88f8-34e6d6102e5a",
+    "createdAt": "2025-05-28T15:40:26.381281",
+    "status": "Done",
+    "ownerId": "2ef36326-2679-4ccd-89ca-a44112a7ca5a"
+  },
+  {
+    "id": "ae0692ae-0192-46d3-88e5-32cece32657c",
+    "name": "Stwórz formularz kontaktowy",
+    "description": "Opis do zadania: Stwórz formularz kontaktowy",
+    "projectId": "f1798b7d-7591-445f-88f8-34e6d6102e5a",
+    "createdAt": "2025-05-28T15:40:26.381308",
+    "status": "To Do",
+    "ownerId": "2ef36326-2679-4ccd-89ca-a44112a7ca5a"
+  },
+  {
+    "id": "51a3a4ec-b238-4297-9b3a-8402010f4298",
+    "name": "Dodaj blog z artykułami",
+    "description": "Opis do zadania: Dodaj blog z artykułami",
+    "projectId": "f1798b7d-7591-445f-88f8-34e6d6102e5a",
+    "createdAt": "2025-05-28T15:40:26.381335",
+    "status": "Doing",
+    "ownerId": "2ef36326-2679-4ccd-89ca-a44112a7ca5a"
+  },
+  {
+    "id": "1997371e-8e03-439d-bc87-315858429db0",
+    "name": "Utwórz interfejs kalendarza",
+    "description": "Opis do zadania: Utwórz interfejs kalendarza",
+    "projectId": "812c803d-1cb8-4e21-a715-2a42bf59cd71",
+    "createdAt": "2025-05-28T15:40:26.381383",
+    "status": "To Do",
+    "ownerId": "54a98ab0-273e-4650-a141-9852be49c4e1"
+  },
+  {
+    "id": "0bb0c8e3-2162-41ea-8b1d-2150efc87b89",
+    "name": "Dodaj możliwość dodawania wydarzeń",
+    "description": "Opis do zadania: Dodaj możliwość dodawania wydarzeń",
+    "projectId": "812c803d-1cb8-4e21-a715-2a42bf59cd71",
+    "createdAt": "2025-05-28T15:40:26.381430",
+    "status": "Doing",
+    "ownerId": "54a98ab0-273e-4650-a141-9852be49c4e1"
+  },
+  {
+    "id": "0db039cf-1a1c-4fb6-9bc7-e1cf767e5d76",
+    "name": "Stwórz widok miesięczny, tygodniowy, dzienny",
+    "description": "Opis do zadania: Stwórz widok miesięczny, tygodniowy, dzienny",
+    "projectId": "812c803d-1cb8-4e21-a715-2a42bf59cd71",
+    "createdAt": "2025-05-28T15:40:26.381494",
+    "status": "Done",
+    "ownerId": "54a98ab0-273e-4650-a141-9852be49c4e1"
+  },
+  {
+    "id": "a40726ab-72d2-42fd-b80f-26822bac7971",
+    "name": "Dodaj możliwość przypisywania zadań do dat",
+    "description": "Opis do zadania: Dodaj możliwość przypisywania zadań do dat",
+    "projectId": "812c803d-1cb8-4e21-a715-2a42bf59cd71",
+    "createdAt": "2025-05-28T15:40:26.381536",
+    "status": "To Do",
+    "ownerId": "54a98ab0-273e-4650-a141-9852be49c4e1"
+  },
+  {
+    "id": "39190fc1-3dc6-4d50-af03-d7e3a94c33a0",
+    "name": "Dodaj integrację z powiadomieniami",
+    "description": "Opis do zadania: Dodaj integrację z powiadomieniami",
+    "projectId": "812c803d-1cb8-4e21-a715-2a42bf59cd71",
+    "createdAt": "2025-05-28T15:40:26.381561",
+    "status": "Doing",
+    "ownerId": "54a98ab0-273e-4650-a141-9852be49c4e1"
+  }
+]

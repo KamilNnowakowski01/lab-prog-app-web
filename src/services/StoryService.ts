@@ -9,11 +9,18 @@ export class StoryService {
     return this.storage.getAll();
   }
 
+  static async getStoriesByProjectId(projectId: string): Promise<Story[]> {
+    const allStories = await this.getStories();
+    return allStories.filter((story) => story.projectId === projectId);
+  }
+
   static async getStoryById(id: string): Promise<Story | null> {
     return this.storage.getById(id);
   }
 
-  static async addStory(story: Omit<Story, "id" | "ownerId" | "createdAt">): Promise<Story> {
+  static async addStory(
+    story: Omit<Story, "id" | "ownerId" | "createdAt">
+  ): Promise<Story> {
     const loggedInUser = UserService.getCurrentUser();
     if (!loggedInUser) {
       throw new Error("Nie znaleziono zalogowanego użytkownika.");
@@ -22,7 +29,7 @@ export class StoryService {
     const newStoryData = {
       ...story,
       ownerId: loggedInUser.id,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     return this.storage.create(newStoryData);
@@ -34,10 +41,5 @@ export class StoryService {
 
   static async deleteStory(id: string): Promise<void> {
     return this.storage.delete(id);
-  }
-
-  // Specjalna metoda tylko do seedowania danych
-  static async saveStories(stories: Story[]): Promise<void> {
-    localStorage.setItem("stories", JSON.stringify(stories));
   }
 }

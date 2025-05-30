@@ -5,11 +5,11 @@ export enum Status {
 }
 
 export interface Story {
+  projectId: string;
+  ownerId: string;
   id: string;
   name: string;
   description: string;
-  projectId: string; // ID projektu
-  createdAt: string; // ISO String
+  createdAt: string;
   status: Status;
-  ownerId: string; //ID user
 }

@@ -10,6 +10,11 @@ export class TaskService {
     return this.storage.getAll();
   }
 
+  static async getTasksByStoryId(storyId: string): Promise<Task[]> {
+    const allTasks = await this.getTasks();
+    return allTasks.filter((task) => task.storyId === storyId);
+  }
+
   static async getTaskById(id: string): Promise<Task | null> {
     return this.storage.getById(id);
   }
@@ -18,7 +23,7 @@ export class TaskService {
     const newTask: Task = {
       ...task,
       id: uuidv4(),
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
     return this.storage.create(newTask);
   }
@@ -31,7 +36,10 @@ export class TaskService {
     return this.storage.delete(id);
   }
 
-  static async assignUser(taskId: string, userId: string): Promise<Task | null> {
+  static async assignUser(
+    taskId: string,
+    userId: string
+  ): Promise<Task | null> {
     const task = await this.getTaskById(taskId);
     if (!task) return null;
 

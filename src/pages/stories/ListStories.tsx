@@ -1,67 +1,85 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Row, Col, Card } from "react-bootstrap";
 import { Story, Status } from "../../models/Story";
 import { StoryService } from "../../services/StoryService";
-import { useProjectStore } from "../../store/useProjectStore";
-import { ProjectService } from "../../services/ProjectService";
-import StoryItem from "../../components/StoryItem";
+import { useProjectInfo } from "../../helpers/useProjectInfo";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
+import StoryCard from "../../components/stories/StoryCard";
 
 export default function ListStories() {
   const [stories, setStories] = useState<Story[]>([]);
-  const [projectName, setProjectName] = useState<string | null>(null);
-  const { activeProjectId } = useProjectStore();
+  const { project, loadingProject } = useProjectInfo();
 
   const refreshStories = async () => {
-    if (activeProjectId) {
-      const allStories = await StoryService.getStories();
-      const filteredStories = allStories.filter(story => story.projectId === activeProjectId);
-      setStories(filteredStories);
-
-      const allProjects = await ProjectService.getProjects();
-      const activeProject = allProjects.find(p => p.id === activeProjectId);
-      if (activeProject) {
-        setProjectName(activeProject.name);
-      }
-    }
+    if (!project?.id) return;
+    const data = await StoryService.getStoriesByProjectId(project.id);
+    setStories(data);
   };
 
   useEffect(() => {
     refreshStories();
-  }, [activeProjectId]);
+  }, [project?.id]);
 
-  const renderStories = (status: Status) => (
+  const renderStories = (status: Status) =>
     stories
-      .filter(story => story.status === status)
-      .map(story => (
-        <StoryItem key={story.id} story={story} refreshStories={refreshStories} />
-      ))
-  );
+      .filter((story) => story.status === status)
+      .map((story) => (
+        <>
+          <StoryCard story={story} />
+        </>
+      ));
 
-  if (!activeProjectId) return <div className="text-danger">Wybierz projekt, aby zobaczyć historyjki!</div>;
+  if (loadingProject) return <p>Ładowanie projektu...</p>;
+
+  if (!project)
+    return (
+      <div className="text-danger">
+        Wybierz projekt, aby zobaczyć historyjki!
+      </div>
+    );
 
   return (
     <div>
-      <h1 className="mb-4 text-primary">📁 {projectName}</h1>
+      <BeltBreadcrumb
+        isProjectRoute
+        projectId={project.id}
+        projectName={project.name}
+        isStoryRoute
+      />
+      <TitleHeader
+        title="Stories List"
+        rightContent={
+          <Link
+            to={`/project/${project.id}/stories/add`}
+            className="btn btn-success ms-auto"
+          >
+            New Story
+          </Link>
+        }
+      />
 
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Kanban - Historyjki</h2>
-        <Link to={`/project/${activeProjectId}/stories/add`} className="btn btn-success">➕ Dodaj historyjkę</Link>
-      </div>
-
-      <div className="row">
-        <div className="col">
-          <h3>📝 To Do</h3>
-          {renderStories(Status.ToDo)}
-        </div>
-        <div className="col">
-          <h3>🔨 Doing</h3>
-          {renderStories(Status.Doing)}
-        </div>
-        <div className="col">
-          <h3>✅ Done</h3>
-          {renderStories(Status.Done)}
-        </div>
-      </div>
+      <Row>
+        <Col md={4}>
+          <Card className="mb-4 shadow-sm">
+            <Card.Header className="fw-bold ">📝 To Do</Card.Header>
+            <Card.Body>{renderStories(Status.ToDo)}</Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card className="mb-4 shadow-sm">
+            <Card.Header className="fw-bold">🔨 Doing</Card.Header>
+            <Card.Body>{renderStories(Status.Doing)}</Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card className="mb-4 shadow-sm">
+            <Card.Header className="fw-bold">✅ Done</Card.Header>
+            <Card.Body>{renderStories(Status.Done)}</Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }
