@@ -27,7 +27,7 @@ export default function ListStories() {
       .filter((story) => story.status === status)
       .map((story) => (
         <>
-          <StoryCard story={story} />
+          <StoryCard key={story.id} story={story} />
         </>
       ));
 

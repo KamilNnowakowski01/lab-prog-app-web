@@ -29,13 +29,6 @@ export default function TaskForm({
 
   const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
-  console.log("TaskForm submit:", {
-    name,
-    description,
-    priority,
-    estimatedHours,
-    status,
-  });
   onSubmit({
     name,
     description,

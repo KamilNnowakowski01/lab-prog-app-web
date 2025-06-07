@@ -1,7 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
-
-import { seeds } from "./seeds/seeds";
 
 //pages
 import Home from "./pages/Home";
@@ -32,9 +29,6 @@ import { ThemeWrapper } from "./components/ThemeWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  useEffect(() => {
-    seeds();
-  }, []);
 
   return (
     <ThemeWrapper>

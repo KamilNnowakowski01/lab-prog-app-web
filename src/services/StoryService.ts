@@ -1,21 +1,39 @@
-import { LocalStorage } from "./LocalStorage";
+import { supabase } from "./supabaseClient";
 import { Story } from "../models/Story";
 import { UserService } from "./UserService";
+import { v4 as uuidv4 } from "uuid";
 
 export class StoryService {
-  private static storage = new LocalStorage<Story>("stories");
-
   static async getStories(): Promise<Story[]> {
-    return this.storage.getAll();
+    const { data, error } = await supabase
+      .from("stories")
+      .select("*")
+      .order("createdAt", { ascending: false });
+
+    if (error) throw new Error("Błąd pobierania stories: " + error.message);
+    return data as Story[];
   }
 
   static async getStoriesByProjectId(projectId: string): Promise<Story[]> {
-    const allStories = await this.getStories();
-    return allStories.filter((story) => story.projectId === projectId);
+    const { data, error } = await supabase
+      .from("stories")
+      .select("*")
+      .eq("projectId", projectId)
+      .order("createdAt", { ascending: false });
+
+    if (error) throw new Error("Błąd filtrowania stories: " + error.message);
+    return data as Story[];
   }
 
   static async getStoryById(id: string): Promise<Story | null> {
-    return this.storage.getById(id);
+    const { data, error } = await supabase
+      .from("stories")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (error) throw new Error("Błąd pobierania story: " + error.message);
+    return data as Story;
   }
 
   static async addStory(
@@ -26,20 +44,45 @@ export class StoryService {
       throw new Error("Nie znaleziono zalogowanego użytkownika.");
     }
 
-    const newStoryData = {
+    const newStory = {
+      id: uuidv4(),
       ...story,
       ownerId: loggedInUser.id,
       createdAt: new Date().toISOString(),
     };
 
-    return this.storage.create(newStoryData);
+    const { data, error } = await supabase
+      .from("stories")
+      .insert([newStory])
+      .select()
+      .single();
+
+    if (error) throw new Error("Błąd dodawania story: " + error.message);
+    return data as Story;
   }
 
   static async updateStory(updatedStory: Story): Promise<Story> {
-    return this.storage.update(updatedStory);
+    const { data, error } = await supabase
+      .from("stories")
+      .update({
+        name: updatedStory.name,
+        description: updatedStory.description,
+        status: updatedStory.status,
+      })
+      .eq("id", updatedStory.id)
+      .select()
+      .single();
+
+    if (error) throw new Error("Błąd aktualizacji story: " + error.message);
+    return data as Story;
   }
 
   static async deleteStory(id: string): Promise<void> {
-    return this.storage.delete(id);
+    const { error } = await supabase
+      .from("stories")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw new Error("Błąd usuwania story: " + error.message);
   }
 }

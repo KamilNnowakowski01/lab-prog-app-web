@@ -1,0 +1,9 @@
+ALTER TABLE stories RENAME COLUMN "projectid" TO "projectId";
+ALTER TABLE stories RENAME COLUMN "ownerid" TO "ownerId";
+ALTER TABLE stories RENAME COLUMN "createdat" TO "createdAt";
+ALTER TABLE tasks RENAME COLUMN "storyid" TO "storyId";
+ALTER TABLE tasks RENAME COLUMN "assigneduserid" TO "assignedUserId";
+ALTER TABLE tasks RENAME COLUMN "createdat" TO "createdAt";
+ALTER TABLE tasks RENAME COLUMN "startdate" TO "startDate";
+ALTER TABLE tasks RENAME COLUMN "enddate" TO "endDate";
+ALTER TABLE tasks RENAME COLUMN "estimatedhours" TO "estimatedHours";
