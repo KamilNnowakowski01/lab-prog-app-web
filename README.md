@@ -1,90 +1,65 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# **ManagMe**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### **Programowanie aplikacji webowych **
+**lab5/3/PROGN**
+*Kamil Nowakowski*
+*14150*
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 👤 Przykładowe konta użytkowników
 
-## Expanding the ESLint configuration
+Można skorzystać z poniższych danych do logowania w środowisku testowym:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Rola       | Login                | Hasło       |
+|------------|----------------------|-------------|
+| Admin      | `admin@example.com`  | `admin123`  |
+| DevOps     | `marek@example.com`  | `haslo123`  |
+| Developer  | `anna@example.com`   | `haslo123`  |
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+> ⚠️ **Uwaga:** Te konta są przeznaczone wyłącznie do celów testowych i demonstracyjnych. Nie używaj ich w środowisku produkcyjnym.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-=======
-# lab-prog-app-web
-# lab-prog-app-web
->>>>>>> b8499fa6509c0ecfa8e96fd45e35b2ba8016e2d7
+## 🔗 Struktura nawigacji
 
+### 🌐 Strony
 
-🧩 (React Router)
-📁 Projekty
-/projekty – lista projektów
+- `/` – Strona główna
+- `/login` – Logowanie użytkownika
+- `/logout` – Wylogowanie użytkownika
 
-/projekty/:projektId – szczegóły projektu
+### 📁 Projekty
 
-/projekty/:projektId/edytuj – edycja projektu
+- `/project` – Lista wszystkich projektów
+- `/project/add` – Tworzenie nowego projektu
+- `/project/:projectId` – Szczegóły projektu
+- `/project/edit/:projectId` – Edycja projektu
+- `/project/delete/:projectId` – Usunięcie projektu
 
-/projekty/nowy – tworzenie nowego projektu
+### 📘 Historie
 
-📘 Historie
-/projekty/:projektId/historie – lista historii w projekcie
+- `/project/:projectId/stories` – Lista historii użytkownika w danym projekcie
+- `/project/:projectId/stories/add` – Dodanie nowej historii
+- `/project/:projectId/stories/:storyId` – Szczegóły historii
+- `/project/:projectId/stories/edit/:storyId` – Edycja historii
+- `/project/:projectId/stories/delete/:storyId` – Usunięcie historii
 
-/projekty/:projektId/historie/nowa – dodaj historię do projektu
+### ✅ Zadania
 
-/projekty/:projektId/historie/:historiaId – szczegóły historii
+- `/project/:projectId/stories/:storyId/tasks/` – Lista zadań w historii
+- `/project/:projectId/stories/:storyId/tasks/add` – Dodanie nowego zadania
+- `/project/:projectId/stories/:storyId/tasks/:tasksId` – Szczegóły zadania
+- `/project/:projectId/stories/:storyId/tasks/edit/:tasksId` – Edycja zadania
+- `/project/:projectId/stories/:storyId/tasks/delete/:tasksId` – Usunięcie zadania
+- `/project/:projectId/stories/:storyId/tasks/:tasksId/assign` – Przypisanie użytkownika do zadania
+- `/project/:projectId/stories/:storyId/tasks/:tasksId/done` – Oznaczenie zadania jako zakończone
 
-/projekty/:projektId/historie/:historiaId/edytuj – edycja historii
+---
 
-✅ Zadania
-/projekty/:projektId/historie/:historiaId/zadania – lista zadań
-
-/projekty/:projektId/historie/:historiaId/zadania/nowe – nowe zadanie
-
-/projekty/:projektId/historie/:historiaId/zadania/:zadanieId – szczegóły zadania
-
-/projekty/:projektId/historie/:historiaId/zadania/:zadanieId/edytuj – edycja zadania
+## SuperBase
+🔗 [Odwiedź Supabase](https://supabase.com)
 
 ![alt text](./public/image.png)
