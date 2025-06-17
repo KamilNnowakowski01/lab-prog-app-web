@@ -1,32 +1,34 @@
-// services/UserService.ts
+import { supabase } from "./supabaseClient";
 import { User } from "../models/User";
-import { LocalStorage } from "./LocalStorage";
 
 export class UserService {
-  private static storage = new LocalStorage<User>("users");
-  private static currentUserKey = "loggedInUser";
+  static async getAll(): Promise<User[]> {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*");
 
-  static async getAllUsers(): Promise<User[]> {
-    return this.storage.getAll();
+    if (error) throw new Error("Failed to fetch users: " + error.message);
+    return data as User[];
   }
 
-  static async createUser(user: Omit<User, "id">): Promise<User> {
-    return this.storage.create(user);
+  static async getByRoles(roles: string[]): Promise<User[]> {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .in("role", roles);
+
+    if (error) throw new Error("Failed to fetch users by role: " + error.message);
+    return data as User[];
   }
 
-  static async loginUser(id: string): Promise<void> {
-    const user = await this.storage.getById(id);
-    if (user) {
-      localStorage.setItem(this.currentUserKey, JSON.stringify(user));
-    }
-  }
+  static async getById(id: string): Promise<User | null> {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
 
-  static logoutUser(): void {
-    localStorage.removeItem(this.currentUserKey);
-  }
-
-  static getCurrentUser(): User | null {
-    const storedUser = localStorage.getItem(this.currentUserKey);
-    return storedUser ? JSON.parse(storedUser) : null;
+    if (error) throw new Error("Failed to fetch user: " + error.message);
+    return data as User;
   }
 }

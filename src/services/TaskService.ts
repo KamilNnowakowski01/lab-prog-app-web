@@ -1,6 +1,6 @@
+import { v4 as uuidv4 } from "uuid";
 import { Task, Status } from "../models/Task";
 import { supabase } from "./supabaseClient";
-import { v4 as uuidv4 } from "uuid";
 
 export class TaskService {
   static async getTasks(): Promise<Task[]> {
@@ -53,6 +53,15 @@ export class TaskService {
   }
 
   static async updateTask(task: Task): Promise<Task> {
+    if (task.status === Status.ToDo) {
+      task = {
+        ...task,
+        assignedUserId: null,
+        startDate: null,
+        endDate: null,
+      };
+    }
+
     const { data, error } = await supabase
       .from("tasks")
       .update({
@@ -74,15 +83,15 @@ export class TaskService {
   }
 
   static async deleteTask(id: string): Promise<void> {
-    const { error } = await supabase
-      .from("tasks")
-      .delete()
-      .eq("id", id);
+    const { error } = await supabase.from("tasks").delete().eq("id", id);
 
     if (error) throw new Error("Błąd usuwania taska: " + error.message);
   }
 
-  static async assignUser(taskId: string, userId: string): Promise<Task | null> {
+  static async assignUser(
+    taskId: string,
+    userId: string
+  ): Promise<Task | null> {
     const task = await this.getTaskById(taskId);
     if (!task) return null;
 

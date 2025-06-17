@@ -1,7 +1,7 @@
+import { v4 as uuidv4 } from "uuid";
 import { supabase } from "./supabaseClient";
 import { Story } from "../models/Story";
-import { UserService } from "./UserService";
-import { v4 as uuidv4 } from "uuid";
+import { AuthSupabase } from "./AuthSupabase";
 
 export class StoryService {
   static async getStories(): Promise<Story[]> {
@@ -39,7 +39,7 @@ export class StoryService {
   static async addStory(
     story: Omit<Story, "id" | "ownerId" | "createdAt">
   ): Promise<Story> {
-    const loggedInUser = UserService.getCurrentUser();
+    const loggedInUser = AuthSupabase.getCurrentUser();
     if (!loggedInUser) {
       throw new Error("Nie znaleziono zalogowanego użytkownika.");
     }
@@ -47,7 +47,7 @@ export class StoryService {
     const newStory = {
       id: uuidv4(),
       ...story,
-      ownerId: loggedInUser.id,
+      ownerId: (await loggedInUser).id,
       createdAt: new Date().toISOString(),
     };
 

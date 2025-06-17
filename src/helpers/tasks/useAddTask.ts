@@ -3,7 +3,10 @@ import { TaskService } from "../../services/TaskService";
 import { Status, TaskPriority } from "../../models/Task";
 
 export function useAddTask() {
-  const { storyId } = useParams<{ storyId: string }>();
+  const { projectId, storyId } = useParams<{
+    projectId: string;
+    storyId: string;
+  }>();
   const navigate = useNavigate();
 
   const handleSubmit = async (data: {
@@ -11,7 +14,7 @@ export function useAddTask() {
     description: string;
     priority: TaskPriority;
     estimatedHours: number;
-    status: Status; // wymagany od teraz
+    status: Status;
   }) => {
     if (!storyId) return;
 
@@ -20,7 +23,7 @@ export function useAddTask() {
         ...data,
         storyId,
       });
-      navigate(`/stories/${storyId}/tasks`);
+      navigate(`/project/${projectId}/stories/${storyId}/tasks/`);
     } catch (error) {
       console.error("Error adding task:", error);
       alert("Coś poszło nie tak. Spróbuj ponownie.");
@@ -28,7 +31,7 @@ export function useAddTask() {
   };
 
   const handleCancel = () => {
-    navigate(-1);
+    navigate(`/project/${projectId}/stories/${storyId}/tasks/`);
   };
 
   return {

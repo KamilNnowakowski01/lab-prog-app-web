@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import { Task, TaskPriority } from "../../models/Task";
-import { useTaskStore } from "../../store/useTaskStore";
-import { Status } from "../../models/Story";
 import { Card, Stack } from "react-bootstrap";
+import { Task, TaskPriority } from "../../models/Task";
+import { Status } from "../../models/Story";
+
 
 interface TaskCardProps {
+  projectId?: string;
+  storyId?: string;
   task: Task;
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
-  const { setActiveTask } = useTaskStore();
+export default function TaskCard({projectId, storyId, task}: TaskCardProps) {
 
   const getStatusColor = (status: Status): string => {
     switch (status) {
@@ -35,10 +36,6 @@ export default function TaskCard({ task }: TaskCardProps) {
       default:
         return "⚪ Nieznany";
     }
-  };
-
-  const handleSelect = () => {
-    setActiveTask(task.id);
   };
 
   return (
@@ -70,9 +67,8 @@ export default function TaskCard({ task }: TaskCardProps) {
 
         <Card.Footer className="d-flex justify-content-center">
           <Link
-            to={`/tasks/${task.id}`}
+            to={`/project/${projectId}/stories/${storyId}/tasks/${task.id}`}
             className="btn btn-primary"
-            onClick={handleSelect}
           >
             Details Task
           </Link>

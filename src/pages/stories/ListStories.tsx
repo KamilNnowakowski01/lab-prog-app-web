@@ -1,44 +1,43 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Row, Col, Card } from "react-bootstrap";
 import { Story, Status } from "../../models/Story";
 import { StoryService } from "../../services/StoryService";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
+import { useProject } from "../../helpers/project/useProject";
 import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
 import TitleHeader from "../../components/TitleHeader";
 import StoryCard from "../../components/stories/StoryCard";
 
 export default function ListStories() {
+  const { projectId } = useParams<{ projectId: string }>();
   const [stories, setStories] = useState<Story[]>([]);
-  const { project, loadingProject } = useProjectInfo();
-
-  const refreshStories = async () => {
-    if (!project?.id) return;
-    const data = await StoryService.getStoriesByProjectId(project.id);
-    setStories(data);
-  };
+  const { project, loadingProject } = useProject();
 
   useEffect(() => {
-    refreshStories();
+    if (!project?.id) return;
+    const fetchStories = async () => {
+      const data = await StoryService.getStoriesByProjectId(project.id);
+      setStories(data);
+    };
+    fetchStories();
   }, [project?.id]);
 
   const renderStories = (status: Status) =>
     stories
       .filter((story) => story.status === status)
       .map((story) => (
-        <>
-          <StoryCard key={story.id} story={story} />
-        </>
+        <StoryCard key={story.id} projectId={projectId} story={story} />
       ));
 
-  if (loadingProject) return <p>Ładowanie projektu...</p>;
+  if (loadingProject) return <p>Loading project...</p>;
 
-  if (!project)
+  if (!project) {
     return (
-      <div className="text-danger">
-        Wybierz projekt, aby zobaczyć historyjki!
+      <div className="text-danger text-center mt-4">
+        Please select a project to see its stories.
       </div>
     );
+  }
 
   return (
     <div>
@@ -63,7 +62,7 @@ export default function ListStories() {
       <Row>
         <Col md={4}>
           <Card className="mb-4 shadow-sm">
-            <Card.Header className="fw-bold ">📝 To Do</Card.Header>
+            <Card.Header className="fw-bold">📝 To Do</Card.Header>
             <Card.Body>{renderStories(Status.ToDo)}</Card.Body>
           </Card>
         </Col>

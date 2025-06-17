@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Row, Col, Card } from "react-bootstrap";
 import { Task, Status } from "../../models/Task";
 import { TaskService } from "../../services/TaskService";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
-import { useStoryInfo } from "../../helpers/useStoryInfo";
+import { useProject } from "../../helpers/project/useProject";
+import { useStory } from "../../helpers/stories/useStory";
 import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
-import { useTaskStore } from "../../store/useTaskStore";
 import TitleHeader from "../../components/TitleHeader";
 import TaskCard from "../../components/tasks/TaskCard";
 
 export default function ListTasks() {
+  const { projectId, storyId } = useParams<{
+    projectId: string;
+    storyId: string;
+  }>();
+
   const [tasks, setTasks] = useState<Task[]>([]);
-  const { project, loadingProject } = useProjectInfo();
-  const { story, loading: loadingStory } = useStoryInfo();
+  const { project, loadingProject } = useProject();
+  const { story, loading: loadingStory } = useStory();
 
   const refreshTasks = async () => {
     if (!story?.id) return;
@@ -28,11 +32,22 @@ export default function ListTasks() {
   const renderTasks = (status: Status) =>
     tasks
       .filter((task) => task.status === status)
-      .map((task) => <TaskCard key={task.id} task={task} />);
+      .map((task) => (
+        <TaskCard
+          key={task.id}
+          projectId={projectId}
+          storyId={storyId}
+          task={task}
+        />
+      ));
 
-  if (loadingProject || loadingStory) return <p>⏳ Ładowanie danych...</p>;
+  if (loadingProject || loadingStory) return <p>Loading...</p>;
   if (!project || !story)
-    return <p className="text-danger">Brak aktywnego projektu lub historii.</p>;
+    return (
+      <p className="text-danger text-center mt-4">
+        Project or story is not available.
+      </p>
+    );
 
   return (
     <div>
@@ -46,9 +61,12 @@ export default function ListTasks() {
         isTaskRoute
       />
       <TitleHeader
-        title="List Tasks"
+        title="Tasks List"
         rightContent={
-          <Link to={`/stories/${story.id}/tasks/add`} className="btn btn-success ms-auto">
+          <Link
+            to={`/project/${projectId}/stories/${story.id}/tasks/add`}
+            className="btn btn-success ms-auto"
+          >
             New Task
           </Link>
         }

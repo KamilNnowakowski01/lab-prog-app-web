@@ -1,14 +1,14 @@
 import { Container } from "react-bootstrap";
-import TitleHeader from "../../components/TitleHeader";
-import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
-import TaskForm from "../../components/tasks/TaskForm";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
-import { useStoryInfo } from "../../helpers/useStoryInfo";
 import { useAddTask } from "../../helpers/tasks/useAddTask";
+import { useProject } from "../../helpers/project/useProject";
+import { useStory } from "../../helpers/stories/useStory";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
+import TaskForm from "../../components/tasks/TaskForm";
 
 export default function AddTasks() {
-  const { project } = useProjectInfo();
-  const { story } = useStoryInfo();
+  const { project } = useProject();
+  const { story } = useStory();
   const { handleSubmit, handleCancel } = useAddTask();
 
   return (

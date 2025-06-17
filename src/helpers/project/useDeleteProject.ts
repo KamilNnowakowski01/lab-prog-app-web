@@ -1,54 +1,44 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Project } from "../../models/Project";
 import { ProjectService } from "../../services/ProjectService";
 
 export function useDeleteProject() {
-  const { id } = useParams<{ id: string }>();
+  const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
 
   const [project, setProject] = useState<Project | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
-
-    const fetchProject = async () => {
-      try {
-        setIsLoading(true);
-        const found = await ProjectService.getProjectById(id);
-        setProject(found);
-      } catch (err) {
-        setError("Failed to load project.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProject();
-  }, [id]);
+    if (!projectId) return;
+    setLoading(true);
+    ProjectService.getProjectById(projectId)
+      .then((data) => {
+        if (data) {
+          setProject(data);
+        } else {
+          console.warn("Project not found.");
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [projectId]);
 
   const handleDelete = async () => {
-    if (!id) return;
+    if (!projectId) return;
+    await ProjectService.deleteProject(projectId);
+    navigate("/project");
+  };
 
-    try {
-      setIsDeleting(true);
-      await ProjectService.deleteProject(id);
-      navigate("/project");
-    } catch (err) {
-      setError("Failed to delete the project.");
-    } finally {
-      setIsDeleting(false);
-    }
+  const handleCancel = () => {
+    if (!projectId) return;
+    navigate(`/project/${projectId}`);
   };
 
   return {
     project,
-    isLoading,
-    isDeleting,
-    error,
+    loading,
     handleDelete,
+    handleCancel,
   };
 }

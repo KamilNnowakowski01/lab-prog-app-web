@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Button, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Card, Button, Stack } from "react-bootstrap";
 import { Project } from "../../models/Project";
 
 interface ProjectDetailsCardProps {

@@ -57,3 +57,34 @@ export default tseslint.config({
 # lab-prog-app-web
 # lab-prog-app-web
 >>>>>>> b8499fa6509c0ecfa8e96fd45e35b2ba8016e2d7
+
+
+🧩 (React Router)
+📁 Projekty
+/projekty – lista projektów
+
+/projekty/:projektId – szczegóły projektu
+
+/projekty/:projektId/edytuj – edycja projektu
+
+/projekty/nowy – tworzenie nowego projektu
+
+📘 Historie
+/projekty/:projektId/historie – lista historii w projekcie
+
+/projekty/:projektId/historie/nowa – dodaj historię do projektu
+
+/projekty/:projektId/historie/:historiaId – szczegóły historii
+
+/projekty/:projektId/historie/:historiaId/edytuj – edycja historii
+
+✅ Zadania
+/projekty/:projektId/historie/:historiaId/zadania – lista zadań
+
+/projekty/:projektId/historie/:historiaId/zadania/nowe – nowe zadanie
+
+/projekty/:projektId/historie/:historiaId/zadania/:zadanieId – szczegóły zadania
+
+/projekty/:projektId/historie/:historiaId/zadania/:zadanieId/edytuj – edycja zadania
+
+![alt text](./public/image.png)

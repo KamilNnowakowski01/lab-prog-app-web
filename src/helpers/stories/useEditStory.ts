@@ -4,7 +4,10 @@ import { Story, Status } from "../../models/Story";
 import { StoryService } from "../../services/StoryService";
 
 export function useEditStory() {
-  const { id } = useParams<{ id: string }>();
+  const { projectId, storyId } = useParams<{
+    projectId: string;
+    storyId: string;
+  }>();
   const navigate = useNavigate();
 
   const [story, setStory] = useState<Story | null>(null);
@@ -14,10 +17,11 @@ export function useEditStory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!storyId) return;
+
     const fetchStory = async () => {
-      if (!id) return;
       try {
-        const foundStory = await StoryService.getStoryById(id);
+        const foundStory = await StoryService.getStoryById(storyId);
         if (foundStory) {
           setStory(foundStory);
           setName(foundStory.name);
@@ -30,23 +34,25 @@ export function useEditStory() {
     };
 
     fetchStory();
-  }, [id]);
+  }, [storyId]);
 
   const handleUpdate = async () => {
-    if (!story || !name.trim() || !description.trim()) return;
+    if (!story || !projectId || !name.trim() || !description.trim()) return;
+
     const updatedStory: Story = {
       ...story,
       name,
       description,
       status,
     };
+
     await StoryService.updateStory(updatedStory);
-    navigate(`/stories/${story.id}`);
+    navigate(`/project/${projectId}/stories/${story.id}`);
   };
 
   const handleCancel = () => {
-    if (story) {
-      navigate(`/stories/${story.id}`);
+    if (story && projectId) {
+      navigate(`/project/${projectId}/stories/${story.id}`);
     }
   };
 

@@ -1,9 +1,9 @@
 import { Container, Spinner } from "react-bootstrap";
-import TitleHeader from "../../components/TitleHeader";
-import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
-import StoryForm from "../../components/stories/StoryForm";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
 import { useEditStory } from "../../helpers/stories/useEditStory";
+import { useProject } from "../../helpers/project/useProject";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
+import StoryForm from "../../components/stories/StoryForm";
 
 export default function EditStories() {
   const {
@@ -18,7 +18,7 @@ export default function EditStories() {
     handleUpdate,
     handleCancel,
   } = useEditStory();
-  const { project } = useProjectInfo();
+  const { project } = useProject();
 
   if (loading) {
     return (

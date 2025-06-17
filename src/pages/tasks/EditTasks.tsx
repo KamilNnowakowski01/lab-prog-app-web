@@ -1,16 +1,17 @@
 import { Container } from "react-bootstrap";
-import TitleHeader from "../../components/TitleHeader";
-import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
-import TaskForm from "../../components/tasks/TaskForm";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
-import { useStoryInfo } from "../../helpers/useStoryInfo";
 import { useEditTask } from "../../helpers/tasks/useEditTask";
-;
+import { useProject } from "../../helpers/project/useProject";
+import { useStory } from "../../helpers/stories/useStory";
+import { useAssignTask } from "../../helpers/tasks/useAssignTask";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
+import TaskForm from "../../components/tasks/TaskForm";
 
 export default function EditTasks() {
-  const { project } = useProjectInfo();
-  const { story } = useStoryInfo();
+  const { project } = useProject();
+  const { story } = useStory();
   const { task, loading, handleUpdate, handleCancel } = useEditTask();
+  const { usersToAssign } = useAssignTask();
 
   if (loading || !task) return <div>Ładowanie danych zadania...</div>;
 
@@ -35,6 +36,7 @@ export default function EditTasks() {
         initialData={task}
         onSubmit={handleUpdate}
         onCancel={handleCancel}
+        usersToAssign={usersToAssign}
       />
     </Container>
   );

@@ -1,6 +1,7 @@
-import { Form, Button, Col } from "react-bootstrap";
 import { useState } from "react";
+import { Form, Button, Col } from "react-bootstrap";
 import { Status, Task, TaskPriority } from "../../models/Task";
+import { User } from "../../models/User";
 
 type TaskFormProps = {
   initialData?: Partial<Task>;
@@ -10,8 +11,12 @@ type TaskFormProps = {
     priority: TaskPriority;
     estimatedHours: number;
     status: Status;
+    assignedUserId?: string;
   }) => void;
   isEdit?: boolean;
+  isAssign?: boolean;
+  isMarkDone?: boolean;
+  usersToAssign?: User[];
   onCancel: () => void;
 };
 
@@ -19,24 +24,41 @@ export default function TaskForm({
   initialData = {},
   onSubmit,
   isEdit = false,
+  isAssign = false,
+  isMarkDone = false,
+  usersToAssign = [],
   onCancel,
 }: TaskFormProps) {
   const [name, setName] = useState(initialData.name || "");
   const [description, setDescription] = useState(initialData.description || "");
-  const [priority, setPriority] = useState(initialData.priority || TaskPriority.Medium);
-  const [estimatedHours, setEstimatedHours] = useState(initialData.estimatedHours || 0);
-  const [status, setStatus] = useState<Status>(initialData.status || Status.ToDo);
+  const [priority, setPriority] = useState(
+    initialData.priority || TaskPriority.Medium
+  );
+  const [estimatedHours, setEstimatedHours] = useState(
+    initialData.estimatedHours || 0
+  );
+  const [status, setStatus] = useState<Status>(
+    initialData.status || Status.ToDo
+  );
+  const [assignedUserId, setAssignedUserId] = useState(
+    initialData.assignedUserId || ""
+  );
+
+  const isReadOnly = isAssign || isMarkDone;
 
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  onSubmit({
-    name,
-    description,
-    priority,
-    estimatedHours,
-    status,
-  });
-};
+    e.preventDefault();
+    const allowAssigneeEdit = isAssign || (isEdit && (status === Status.Doing || status === Status.Done));
+
+    onSubmit({
+      name,
+      description,
+      priority,
+      estimatedHours,
+      status,
+      assignedUserId: allowAssigneeEdit ? assignedUserId : undefined,
+    });
+  };
 
   return (
     <div className="d-flex justify-content-center">
@@ -49,6 +71,7 @@ export default function TaskForm({
               placeholder="Enter task name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={isReadOnly}
             />
           </Form.Group>
 
@@ -60,6 +83,7 @@ export default function TaskForm({
               placeholder="Enter task description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              disabled={isReadOnly}
             />
           </Form.Group>
 
@@ -69,6 +93,7 @@ export default function TaskForm({
               <Form.Select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as Status)}
+                disabled={isReadOnly}
               >
                 {Object.values(Status).map((s) => (
                   <option key={s} value={s}>
@@ -84,6 +109,7 @@ export default function TaskForm({
             <Form.Select
               value={priority}
               onChange={(e) => setPriority(e.target.value as TaskPriority)}
+              disabled={isReadOnly}
             >
               {Object.values(TaskPriority).map((level) => (
                 <option key={level} value={level}>
@@ -100,8 +126,38 @@ export default function TaskForm({
               min={0}
               value={estimatedHours}
               onChange={(e) => setEstimatedHours(Number(e.target.value))}
+              disabled={isReadOnly}
             />
           </Form.Group>
+
+          {(isMarkDone ||
+            isAssign ||
+            (isEdit &&
+              (status === Status.Doing || status === Status.Done))) && (
+            <Form.Group className="mb-4" controlId="formAssignedUser">
+              <Form.Label>Assign to</Form.Label>
+              <Form.Select
+                value={assignedUserId}
+                onChange={(e) => setAssignedUserId(e.target.value)}
+                disabled={isMarkDone}
+              >
+                <option value="">-- Select User --</option>
+
+                {assignedUserId &&
+                  !usersToAssign.find((u) => u.id === assignedUserId) && (
+                    <option value={assignedUserId}>
+                      {assignedUserId} (not in list)
+                    </option>
+                  )}
+
+                {usersToAssign.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name} ({user.role})
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          )}
 
           <div className="d-flex justify-content-end gap-2">
             <Button variant="secondary" onClick={onCancel} type="button">
@@ -110,9 +166,21 @@ export default function TaskForm({
             <Button
               variant="success"
               type="submit"
-              disabled={!name.trim() || !description.trim()}
+              disabled={
+                isMarkDone
+                  ? false
+                  : (isAssign && !assignedUserId) ||
+                    !name.trim() ||
+                    !description.trim()
+              }
             >
-              {isEdit ? "Save" : "Create"}
+              {isEdit
+                ? "Save"
+                : isAssign
+                ? "Assign"
+                : isMarkDone
+                ? "Mark as Done"
+                : "Create"}
             </Button>
           </div>
         </Form>

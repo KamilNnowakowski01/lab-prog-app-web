@@ -1,31 +1,21 @@
 import { Container, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import TitleHeader from "../../components/TitleHeader";
-import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
 import { useDeleteProject } from "../../helpers/project/useDeleteProject";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
 
 export default function DeleteProject() {
   const {
     project,
-    isLoading,
-    isDeleting,
-    error,
+    loading,
     handleDelete,
+    handleCancel,
   } = useDeleteProject();
 
-  if (isLoading) {
+  if (loading) {
     return (
       <Container className="text-center mt-5">
         <div className="spinner-border" role="status" />
         <p className="mt-3">Loading project...</p>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Container className="mt-4">
-        <div className="alert alert-danger">{error}</div>
       </Container>
     );
   }
@@ -56,15 +46,11 @@ export default function DeleteProject() {
             </p>
           </div>
           <div className="d-flex justify-content-end gap-2">
-            <Link to={`/project/${project.id}`} className="btn btn-secondary">
+            <button className="btn btn-secondary" onClick={handleCancel}>
               Cancel
-            </Link>
-            <button
-              className="btn btn-danger"
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              {isDeleting ? "Deleting..." : "Delete"}
+            </button>
+            <button className="btn btn-danger" onClick={handleDelete}>
+              Delete
             </button>
           </div>
         </Col>

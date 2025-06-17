@@ -1,13 +1,13 @@
 export enum TaskPriority {
   Low = "low",
   Medium = "medium",
-  High = "high"
+  High = "high",
 }
 
 export enum Status {
   ToDo = "To Do",
   Doing = "Doing",
-  Done = "Done"
+  Done = "Done",
 }
 
 export interface Task {
@@ -19,7 +19,7 @@ export interface Task {
   estimatedHours: number;
   status: Status;
   createdAt: string;
-  startDate?: string;
-  endDate?: string;
-  assignedUserId?: string;
+  startDate?: string | null;
+  endDate?: string | null;
+  assignedUserId?: string | null;
 }

@@ -1,14 +1,18 @@
 import { Container, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import TitleHeader from "../../components/TitleHeader";
-import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
-import { useStoryInfo } from "../../helpers/useStoryInfo";
+import { Link, useParams } from "react-router-dom";
 import { useDeleteTask } from "../../helpers/tasks/useDeleteTask";
+import { useProject } from "../../helpers/project/useProject";
+import { useStory } from "../../helpers/stories/useStory";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
 
 export default function DeleteTasks() {
-  const { project } = useProjectInfo();
-  const { story } = useStoryInfo();
+  const { projectId, storyId } = useParams<{
+    projectId: string;
+    storyId: string;
+  }>();
+  const { project } = useProject();
+  const { story } = useStory();
   const { task, loading, handleDelete } = useDeleteTask();
 
   if (loading) return <div>Ładowanie danych zadania...</div>;
@@ -39,7 +43,7 @@ export default function DeleteTasks() {
             </p>
           </div>
           <div className="d-flex justify-content-end gap-2">
-            <Link to={`/tasks/${task.id}`} className="btn btn-secondary">
+            <Link to={`/project/${projectId}/stories/${storyId}/tasks/${task.id}`} className="btn btn-secondary">
               Cancel
             </Link>
             <button className="btn btn-danger" onClick={handleDelete}>

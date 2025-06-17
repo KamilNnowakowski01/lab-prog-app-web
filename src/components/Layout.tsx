@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import React, { ReactNode, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useThemeStore } from "../store/useThemeStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { Account } from "./Account";
@@ -15,6 +15,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const user = useAuthStore((state) => state.user);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const logout = useAuthStore((state) => state.logout);
+  const loadFromSession = useAuthStore((state) => state.loadFromSession);
+
+  useEffect(() => {
+    loadFromSession();
+  }, [loadFromSession]);
 
   return (
     <>

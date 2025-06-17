@@ -1,29 +1,28 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useProjectStore } from "../../store/useProjectStore";
+import { useNavigate, useParams } from "react-router-dom";
 import { Status } from "../../models/Story";
 import { StoryService } from "../../services/StoryService";
 
 export function useAddStory() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const { activeProjectId } = useProjectStore();
+  const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    if (!name.trim() || !description.trim() || !activeProjectId) return;
+    if (!name.trim() || !description.trim() || !projectId) return;
 
     try {
       await StoryService.addStory({
         name,
         description,
-        projectId: activeProjectId,
+        projectId: projectId,
         status: Status.ToDo,
       });
 
       setName("");
       setDescription("");
-      navigate(`/project/${activeProjectId}/stories`);
+      navigate(`/project/${projectId}/stories`);
     } catch (error) {
       console.error("Error adding story:", error);
       alert("Coś poszło nie tak. Spróbuj ponownie.");
@@ -31,7 +30,7 @@ export function useAddStory() {
   };
 
   const handleCancel = () => {
-    navigate("/stories");
+    navigate(`/project/${projectId}/stories`);
   };
 
   return {
@@ -41,6 +40,6 @@ export function useAddStory() {
     setDescription,
     handleSubmit,
     handleCancel,
-    activeProjectId,
+    projectId,
   };
 }

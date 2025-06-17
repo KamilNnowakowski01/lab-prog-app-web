@@ -1,6 +1,6 @@
 import React from "react";
-import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Breadcrumb } from "react-bootstrap";
 
 type Props = {
   isProjectRoute?: boolean;
@@ -18,6 +18,8 @@ type Props = {
   isCreate?: boolean;
   isEdit?: boolean;
   isDelete?: boolean;
+  isAssign?: boolean;
+  isMarkAsDone?: boolean;
 };
 
 const BeltBreadcrumb: React.FC<Props> = ({
@@ -32,7 +34,9 @@ const BeltBreadcrumb: React.FC<Props> = ({
   taskName,
   isCreate,
   isEdit,
-  isDelete
+  isDelete,
+  isAssign,
+  isMarkAsDone,
 }) => {
   return (
     <Breadcrumb className="mb-3">
@@ -42,56 +46,63 @@ const BeltBreadcrumb: React.FC<Props> = ({
 
       {/* Projects */}
       {isProjectRoute && (
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/project/` }}>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/project/" }}>
           📁 Projects
         </Breadcrumb.Item>
       )}
       {projectId && projectName && (
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/project/${projectId}` }}>
+        <Breadcrumb.Item
+          linkAs={Link}
+          linkProps={{ to: `/project/${projectId}` }}
+        >
           📁 {projectName}
         </Breadcrumb.Item>
       )}
 
       {/* Stories */}
-      {isStoryRoute && (
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/stories/` }}>
+      {isStoryRoute && projectId && (
+        <Breadcrumb.Item
+          linkAs={Link}
+          linkProps={{ to: `/project/${projectId}/stories` }}
+        >
           📚 Stories
         </Breadcrumb.Item>
       )}
-      {storyId && storyName && (
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/stories/${storyId}` }}>
+      {storyId && storyName && projectId && (
+        <Breadcrumb.Item
+          linkAs={Link}
+          linkProps={{ to: `/project/${projectId}/stories/${storyId}` }}
+        >
           📚 {storyName}
         </Breadcrumb.Item>
       )}
 
       {/* Tasks */}
-      {isTaskRoute && (
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/stories/${storyId}/tasks/` }}>
+      {isTaskRoute && projectId && storyId && (
+        <Breadcrumb.Item
+          linkAs={Link}
+          linkProps={{ to: `/project/${projectId}/stories/${storyId}/tasks` }}
+        >
           ✅ Tasks
         </Breadcrumb.Item>
       )}
-      {taskId && taskName && (
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/tasks/${taskId}` }}>
+      {taskId && taskName && projectId && storyId && (
+        <Breadcrumb.Item
+          linkAs={Link}
+          linkProps={{
+            to: `/project/${projectId}/stories/${storyId}/tasks/${taskId}`,
+          }}
+        >
           ✅ {taskName}
         </Breadcrumb.Item>
       )}
 
       {/* Optional Action */}
-      {isEdit && (
-        <Breadcrumb.Item active>
-          ✏️ Edit
-        </Breadcrumb.Item>
-      )}
-      {isDelete && (
-        <Breadcrumb.Item active>
-          🗑️ Delete
-        </Breadcrumb.Item>
-      )}
-      {isCreate && (
-        <Breadcrumb.Item active>
-          📄 Create
-        </Breadcrumb.Item>
-      )}
+      {isMarkAsDone && <Breadcrumb.Item active>✅ Mark as Done</Breadcrumb.Item>}
+      {isAssign && <Breadcrumb.Item active>✏️ Assign</Breadcrumb.Item>}
+      {isEdit && <Breadcrumb.Item active>✏️ Edit</Breadcrumb.Item>}
+      {isDelete && <Breadcrumb.Item active>🗑️ Delete</Breadcrumb.Item>}
+      {isCreate && <Breadcrumb.Item active>📄 Create</Breadcrumb.Item>}
     </Breadcrumb>
   );
 };

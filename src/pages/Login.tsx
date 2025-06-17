@@ -1,26 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-import { AuthService } from "../services/AuthService";
 import { useAuthStore } from "../store/useAuthStore";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login);
+
+  const login = useAuthStore((state) => state.login); // login(email, password)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      await AuthService.login(username, password);
-      const currentUser = await AuthService.getCurrentUser();
-      login(currentUser); // <- aktualizacja store
-
-      setUsername("");
+      await login(email, password); // ✅ poprawne wywołanie
+      setEmail("");
       setPassword("");
       navigate("/");
     } catch (err: any) {
@@ -35,13 +32,13 @@ export default function Login() {
           <Card.Title className="mb-4">🔐 Logowanie</Card.Title>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleLogin}>
-            <Form.Group className="mb-3" controlId="formUsername">
-              <Form.Label>Login</Form.Label>
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Adres e-mail</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="np. jan.kowalski"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                placeholder="np. jan@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </Form.Group>

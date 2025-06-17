@@ -1,9 +1,9 @@
 import { Container } from "react-bootstrap";
-import TitleHeader from "../../components/TitleHeader";
-import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
-import StoryForm from "../../components/stories/StoryForm";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
 import { useAddStory } from "../../helpers/stories/useAddStory";
+import { useProject } from "../../helpers/project/useProject";
+import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
+import TitleHeader from "../../components/TitleHeader";
+import StoryForm from "../../components/stories/StoryForm";
 
 export default function AddStory() {
   const {
@@ -13,10 +13,9 @@ export default function AddStory() {
     setDescription,
     handleSubmit,
     handleCancel,
-    activeProjectId,
   } = useAddStory();
 
-  const { project } = useProjectInfo();
+  const { project } = useProject();
 
   return (
     <Container>

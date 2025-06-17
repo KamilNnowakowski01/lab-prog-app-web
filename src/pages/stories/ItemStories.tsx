@@ -1,21 +1,23 @@
-import { useNavigate, Link } from "react-router-dom";
-import { Status } from "../../models/Story";
-import { useProjectInfo } from "../../helpers/useProjectInfo";
-import { useStoryInfo } from "../../helpers/useStoryInfo";
+import { Container } from "react-bootstrap";
+import { useProject } from "../../helpers/project/useProject";
+import { useStory } from "../../helpers/stories/useStory";
 import BeltBreadcrumb from "../../components/ProjectBreadcrumb";
 import TitleHeader from "../../components/TitleHeader";
 import StoryDetailsCard from "../../components/stories/StoryDetailsCard";
-import { Container } from "react-bootstrap";
 
 export default function ItemStories() {
-  const { project, loadingProject } = useProjectInfo();
-  const { story, loading: loadingStory } = useStoryInfo();
+  const { project, loadingProject } = useProject();
+  const { story, loading } = useStory();
 
-  if (loadingProject || loadingStory) return <div>Ładowanie danych...</div>;
+  if (loadingProject || loading) return <div>Loading...</div>;
 
-  if (!story)
-    return <div className="text-danger">Nie znaleziono historyjki!</div>;
-  if (!project) return <div className="text-danger">Brak danych projektu.</div>;
+  if (!project || !story) {
+    return (
+      <div className="text-danger text-center mt-4">
+        Story or project not found!
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -30,7 +32,7 @@ export default function ItemStories() {
       <TitleHeader title="Story" />
 
       <Container className="d-flex justify-content-center">
-      <StoryDetailsCard story={story}/>
+        <StoryDetailsCard projectId={project.id} story={story} />
       </Container>
     </div>
   );

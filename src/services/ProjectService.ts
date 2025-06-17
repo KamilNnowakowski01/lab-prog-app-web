@@ -1,6 +1,6 @@
-import { supabase } from "./supabaseClient";
-import { Project } from "../models/Project";
 import { v4 as uuidv4 } from "uuid";
+import { Project } from "../models/Project";
+import { supabase } from "./supabaseClient";
 
 export class ProjectService {
   static async getProjects(): Promise<Project[]> {
