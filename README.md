@@ -1,7 +1,8 @@
 # **ManagMe**
 
-### **Programowanie aplikacji webowych **
+### Programowanie aplikacji webowych
 **lab5/3/PROGN**
+
 *Kamil Nowakowski*
 *14150*
 
@@ -18,8 +19,6 @@ Można skorzystać z poniższych danych do logowania w środowisku testowym:
 | Developer  | `anna@example.com`   | `haslo123`  |
 
 > ⚠️ **Uwaga:** Te konta są przeznaczone wyłącznie do celów testowych i demonstracyjnych. Nie używaj ich w środowisku produkcyjnym.
-
----
 
 ---
 

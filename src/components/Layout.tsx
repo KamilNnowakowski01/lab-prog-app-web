@@ -37,16 +37,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Navbar.Collapse id="main-navbar">
             <Nav className="ms-auto">
               <Nav.Link as={NavLink} to="/" end>
-                🏠 Strona główna
+                🏠 Home
               </Nav.Link>
 
               {isLoggedIn && (
-                <NavDropdown title="📁 Projekty" id="nav-projects">
+                <NavDropdown title="📁 Projects" id="nav-projects">
                   <NavDropdown.Item as={NavLink} to="/project">
-                    Lista projektów
+                    Projects List
                   </NavDropdown.Item>
                   <NavDropdown.Item as={NavLink} to="/project/add">
-                    Dodaj projekt
+                    New Project
                   </NavDropdown.Item>
                 </NavDropdown>
               )}
@@ -55,7 +55,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Account user={user} onLogout={logout} />
               ) : (
                 <Nav.Link as={NavLink} to="/login" className="ms-3">
-                  🔐 Zaloguj się
+                  🔐 LogIn
                 </Nav.Link>
               )}
 

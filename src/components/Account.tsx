@@ -15,10 +15,10 @@ export const Account = ({ user, onLogout }: AccountProps) => {
         👤 {user.name}
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.ItemText>Rola: {user.role}</Dropdown.ItemText>
+        <Dropdown.ItemText>Role: {user.role}</Dropdown.ItemText>
         <Dropdown.Divider />
         <Dropdown.Item as="button" onClick={onLogout} className="text-danger">
-          Wyloguj się
+          LogOut
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

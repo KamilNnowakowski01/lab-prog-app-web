@@ -28,13 +28,13 @@ export default function TaskCard({projectId, storyId, task}: TaskCardProps) {
   const getPriorityLabel = (priority: TaskPriority): string => {
     switch (priority) {
       case TaskPriority.Low:
-        return "🟢 Niski";
+        return "🟢 Low";
       case TaskPriority.Medium:
-        return "🟡 Średni";
+        return "🟡 Medium";
       case TaskPriority.High:
-        return "🔴 Wysoki";
+        return "🔴 High";
       default:
-        return "⚪ Nieznany";
+        return "⚪";
     }
   };
 
@@ -58,10 +58,10 @@ export default function TaskCard({projectId, storyId, task}: TaskCardProps) {
           <Card.Text className="fs-6 mb-4">{task.description}</Card.Text>
 
           <p className="mb-1">
-            <strong>Priorytet:</strong> {getPriorityLabel(task.priority)}
+            <strong>Priority:</strong> {getPriorityLabel(task.priority)}
           </p>
           <p className="mb-3">
-            <strong>Estymacja:</strong> {task.estimatedHours} godz.
+            <strong>Estimated Hours:</strong> {task.estimatedHours} h
           </p>
         </Card.Body>
 
