@@ -9,14 +9,14 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const login = useAuthStore((state) => state.login); // login(email, password)
+  const login = useAuthStore((state) => state.login);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      await login(email, password); // ✅ poprawne wywołanie
+      await login(email, password);
       setEmail("");
       setPassword("");
       navigate("/");
@@ -29,14 +29,14 @@ export default function Login() {
     <div className="container mt-5 d-flex justify-content-center">
       <Card style={{ width: "24rem" }} className="shadow-sm">
         <Card.Body>
-          <Card.Title className="mb-4">🔐 Logowanie</Card.Title>
+          <Card.Title className="mb-4">🔐 LogIn Form</Card.Title>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleLogin}>
             <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>Adres e-mail</Form.Label>
+              <Form.Label>E-mail</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="np. jan@example.com"
+                placeholder="E-mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -44,10 +44,10 @@ export default function Login() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formPassword">
-              <Form.Label>Hasło</Form.Label>
+              <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Hasło"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -55,7 +55,7 @@ export default function Login() {
             </Form.Group>
 
             <Button variant="primary" type="submit" className="w-100">
-              Zaloguj się
+              LogIn
             </Button>
           </Form>
         </Card.Body>
