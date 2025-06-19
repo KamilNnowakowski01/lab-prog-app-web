@@ -12,8 +12,11 @@
 ## Instrukcja uruchomienia projektu
 
 gh repo clone KamilNnowakowski01/lab-prog-app-web
+
 cd lab-prog-app-web
+
 npm install
+
 npm run dev
 
 🔗 [Otwórz aplikację lokalnie](http://localhost:5173/)
