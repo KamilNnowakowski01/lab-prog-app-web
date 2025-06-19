@@ -1,0 +1,15 @@
+{
+  "original": {
+    "name": "Implement Hero Section",
+    "description": "Design and implement a hero section on the home page that includes a larger background graphic.",
+    "priority": "low",
+    "hours": "5"
+  },
+  "edited": {
+    "name": "Edited. Implement Hero Section",
+    "description": "Edited. Design and implement a hero section on the home page that includes a larger background graphic.",
+    "priority": "high",
+    "hours": "8"
+  },
+  "assignee": "Marek Wiśniewski (devops)"
+}

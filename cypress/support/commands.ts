@@ -34,6 +34,20 @@ Cypress.Commands.add("login", (email: string, password: string) => {
   });
 });
 
+Cypress.Commands.add("checkUserRole", (expectedRole: string) => {
+  cy.get(selectors.accountDropdown).should("be.visible").click();
+
+  cy.get(".dropdown-menu .dropdown-item-text")
+    .should("be.visible")
+    .invoke("text")
+    .then((text) => {
+      const role = text.replace("Role: ", "").trim();
+      expect(role).to.equal(expectedRole);
+    });
+
+  cy.get(selectors.accountDropdown).click(); // Zamknij dropdown po sprawdzeniu
+});
+
 Cypress.Commands.add("logout", () => {
   cy.get(selectors.accountDropdown).should("be.visible").click();
   cy.contains("button", "LogOut").should("be.visible").click();
@@ -85,15 +99,37 @@ Cypress.Commands.add("selectStory", (name: string) => {
     .should("have.text", name);
 });
 
+Cypress.Commands.add(
+  "navigateToTaskList",
+  (nameProject: string, nameStory: string) => {
+    cy.selectProject(nameProject);
+    cy.contains("button", "Open Stories").click();
+    cy.selectStory(nameStory);
+    cy.contains("a", "Open Tasks").click();
+  }
+);
+
+Cypress.Commands.add("selectTask", (name: string) => {
+  cy.contains(".card", name).within(() => {
+    cy.contains("a", "Details Task").click();
+  });
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
       login(email: string, password: string): Chainable<void>;
+      checkUserRole(expectedRole: string): Chainable<void>;
       logout(): Chainable<void>;
       createProject(name: string, description: string): Chainable<void>;
       selectProject(name: string): Chainable<void>;
       createStory(name: string, description: string): Chainable<void>;
       selectStory(name: string): Chainable<void>;
+      selectTask(name: string): Chainable<void>;
+      navigateToTaskList(
+        nameProject: string,
+        nameStory: string
+      ): Chainable<void>;
     }
   }
 }

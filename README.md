@@ -8,6 +8,21 @@
 
 ---
 
+
+## Instrukcja uruchomienia projektu
+
+gh repo clone KamilNnowakowski01/lab-prog-app-web
+cd lab-prog-app-web
+npm install
+npm run dev
+
+🔗 [Otwórz aplikację lokalnie](http://localhost:5173/)
+
+
+### Uruchomienie testów cypress e2e
+
+npm run cy
+
 ## 👤 Przykładowe konta użytkowników
 
 Można skorzystać z poniższych danych do logowania w środowisku testowym:
@@ -16,9 +31,9 @@ Można skorzystać z poniższych danych do logowania w środowisku testowym:
 |------------|----------------------|-------------|
 | Admin      | `admin@example.com`  | `admin123`  |
 | DevOps     | `marek@example.com`  | `haslo123`  |
-| Developer  | `anna@example.com`   | `haslo123`  |
+| Developer  | `annan@example.com`  | `haslo123`  |
 
-> ⚠️ **Uwaga:** Te konta są przeznaczone wyłącznie do celów testowych i demonstracyjnych. Nie używaj ich w środowisku produkcyjnym.
+> ⚠️ **Uwaga:** Te konta są przeznaczone wyłącznie do celów testowych i demonstracyjnych.
 
 ---
 

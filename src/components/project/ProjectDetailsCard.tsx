@@ -15,7 +15,7 @@ const ProjectDetailsCard: React.FC<ProjectDetailsCardProps> = ({ project }) => {
           <div>Details Project Card</div>
           <div className="ms-auto d-flex flex-wrap gap-2">
             <Link to={`/project/edit/${project.id}`}>
-              <Button variant="warning">Edite</Button>
+              <Button variant="warning">Edit</Button>
             </Link>
             <Link to={`/project/delete/${project.id}`}>
               <Button variant="danger">Delete</Button>

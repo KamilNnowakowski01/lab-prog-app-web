@@ -22,7 +22,7 @@ const StoryDetailsCard: React.FC<StoryDetailsCardProps> = ({
               to={`/project/${projectId}/stories/edit/${story.id}`}
               className="btn btn-warning"
             >
-              Edite
+              Edit
             </Link>
             <Link
               to={`/project/${projectId}/stories/delete/${story.id}`}

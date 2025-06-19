@@ -28,7 +28,7 @@ export default function TaskDetailsCard({
               to={`/project/${projectId}/stories/${storyId}/tasks/edit/${task.id}`}
               className="btn btn-warning"
             >
-              Edite
+              Edit
             </Link>
             <Link
               to={`/project/${projectId}/stories/${storyId}/tasks/delete/${task.id}`}
